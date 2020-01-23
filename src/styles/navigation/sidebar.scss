@@ -1,0 +1,137 @@
+.sidenav {
+  height: 100%;
+  width: 60px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: $main-pink;
+  overflow-x: hidden;
+  padding-top: 20px;
+
+  .top {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 4%;
+    a {
+      font-size: 18px;
+    }
+  }
+  .content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 90%;
+    a {
+      font-size: 25px;
+      margin-top: 3.5rem;
+    }
+  }
+  a {
+    // padding: 36px 8px 6px 16px;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    &:hover {
+      color: #f1f1f1;
+    }
+  }
+}
+
+.main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
+}
+
+// .App {
+//   display: flex;
+//   width: 100%;
+//   align-items: stretch;
+// }
+// .sidebar {
+//   min-width: 250px;
+//   max-width: 250px;
+//   background: #7386d5;
+//   color: #fff;
+//   margin-left: -250px;
+//   transition: all 0.5s;
+// }
+
+// .sidebar.is-open {
+//   margin-left: 0;
+//   transition: 0.5s;
+// }
+
+// .sidebar-header {
+//   background: #6d7fcc;
+// }
+
+// .sidebar-header h3 {
+//   color: #fff;
+//   padding: 1em;
+// }
+
+// .sidebar ul p {
+//   color: #fff;
+//   padding: 10px;
+// }
+
+// .menu-open {
+//   background: #6d7fcc;
+// }
+
+// .nav-item:hover {
+//   color: #7386d5;
+//   background: #fff;
+// }
+
+// .items-menu {
+//   color: #fff;
+//   background: #6d7fcc;
+// }
+
+// li a.dropdown-toggle::after {
+//   display: inline-flex;
+//   position: relative;
+//   left: 60%;
+//   top: 10%;
+// }
+
+// .sidebar-header > span {
+//   position: relative;
+//   float: right;
+//   margin: 0.5em;
+//   font-size: 2rem;
+//   cursor: pointer;
+//   display: none;
+// }
+// .side-menu {
+//   height: calc(100vh - 130px);
+//   overflow-y: scroll;
+// }
+
+// .side-menu::-webkit-scrollbar {
+//   width: 10px;
+// }
+
+// .side-menu::-webkit-scrollbar-thumb {
+//   background: #5466b3;
+//   border-radius: 3px;
+// }
+
+// .side-menu::-webkit-scrollbar-thumb:hover {
+//   background: #3a4c99;
+// }

@@ -1,0 +1,42 @@
+.btn--main-pink {
+  background-color: $main-pink !important;
+  border-radius: 0;
+  font-family: $secondary-font;
+  border: none !important;
+  font-size: 1rem;
+  color: #ffffff;
+  letter-spacing: 1px;
+  padding: 0.8rem 1.7rem;
+  text-align: center;
+  line-height: 22px;
+  text-transform: uppercase;
+  @media only screen and (min-width: 1920px) {
+    padding: 0.9rem 2rem;
+  }
+}
+.btn--main-pink__sm {
+  padding: 0.6rem 1rem;
+  background-color: $main-pink !important;
+  border-radius: 0;
+  font-family: $secondary-font;
+  border: none !important;
+  font-size: 0.8rem;
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-align: center;
+  line-height: 22px;
+  text-transform: uppercase;
+}
+.btn--dark-pink {
+  padding: 0.6rem 1rem;
+  background-color: darken($light-pink, 20%) !important;
+  border-radius: 0;
+  font-family: $secondary-font;
+  border: none !important;
+  font-size: 0.8rem;
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-align: center;
+  line-height: 22px;
+  text-transform: uppercase;
+}

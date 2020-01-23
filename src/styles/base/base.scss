@@ -1,0 +1,18 @@
+html,
+body {
+  height: 100%;
+}
+// body {
+//   background-color: #fdfdf4 !important;
+// }
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+section.container {
+  flex: 1 0 auto;
+}
+h1 {
+  font-family: $main-font;
+}
