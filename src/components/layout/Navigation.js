@@ -80,7 +80,7 @@ const Navigation = () => {
             </Fragment>
             {/* {!loading && (
               <Fragment>
-                {isAuthenticated ? <Fragment></Fragment> : guestLinks}
+                {loggedIn ? <Fragment></Fragment> : guestLinks}
               </Fragment>
             )} */}
           </UncontrolledDropdown>

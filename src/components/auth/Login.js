@@ -2,8 +2,9 @@ import React, { Fragment, Component } from "react";
 import { Col, Row, Form, FormGroup, Label, Input } from "reactstrap";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { login } from "../../actions/userActions";
+import { login, loadUser } from "../../actions/userActions";
 import PropTypes from "prop-types";
+import { history } from "../../helpers/history";
 
 class Login extends Component {
   constructor(props) {
@@ -29,12 +30,14 @@ class Login extends Component {
     const { username, password } = this.state;
     if (username && password) {
       this.props.login(username, password);
+      this.props.loadUser();
     }
     this.setState({
       username: "",
       password: "",
       submitted: false
     });
+    // history.push("/dashboard");
   };
   render() {
     const { loggingIn } = this.props;
@@ -100,4 +103,4 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({ loggedIn: state.authentication });
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login, loadUser })(Login);

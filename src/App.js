@@ -1,5 +1,10 @@
 import React, { Fragment, Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
 import Navigation from "./components/layout/Navigation";
 import Footer from "./components/layout/Footer";
 import Catalogue from "./components/catalogue/Catalogue";
@@ -8,6 +13,8 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Gallery from "./components/gallery/Gallery";
 import Favorites from "./components/favorites/Favorites";
+import { PrivateRoute } from "./components/privateRoute/PrivateRoute";
+import { history } from "./helpers/history";
 
 import Parse from "parse";
 
@@ -31,7 +38,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router>
+        <Router history={history}>
           <Fragment>
             <Navigation />
             <section className="container">
@@ -40,9 +47,11 @@ class App extends Component {
                 <Route exact path="/" component={Catalogue} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
+                <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/gallery" component={Gallery} />
                 <Route exact path="/favorites" component={Favorites} />
-                <Route exact path="/dashboard" component={Dashboard} />
+                {/* <Route exact path="/dashboard" component={Dashboard} /> */}
+                <Redirect from="*" to="/" />
                 {/* <PrivateRoute exact path="/gallery" component={Gallery} />
                 <PrivateRoute exact path="/favorites" component={Favorites} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} /> */}

@@ -11,6 +11,9 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 // ---- LOGOUT ----
 export const LOGOUT = "LOGOUT";
+// ---- AUTH ----
+export const AUTH_ERROR = "AUTH_ERROR";
+export const USER_LOADED = "USER_LOADED";
 
 // -------------------
 // ---- ADMIN ----
