@@ -37,7 +37,6 @@ class App extends Component {
     Parse.serverURL = "http://34.73.39.87/parse";
   }
   render() {
-    const { loggedIn } = this.props;
     return (
       <Provider store={store}>
         <Router history={history}>

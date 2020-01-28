@@ -52,6 +52,7 @@ class Register extends Component {
     } else {
       this.props.register(user);
     }
+    this.setState({ submitted: true });
     // if (
     //   user.firstName &&
     //   user.lastName &&
@@ -63,14 +64,13 @@ class Register extends Component {
     //   this.props.register(user);
     //   // this.props.loadUser();
     // }
-    this.setState({ submitted: true });
+
     // this.setState({
 
     // });
   }
 
   render() {
-    const { registering } = this.props;
     const { user, submitted } = this.state;
     if (this.props.loggedIn) {
       return <Redirect to="/dashboard" />;
@@ -235,4 +235,7 @@ Register.propTypes = {
   register: PropTypes.func.isRequired,
   loggedIn: PropTypes.bool.isRequired
 };
-export default connect(null, { setAlert, register, loadUser })(Register);
+const mapStateToProps = state => ({ loggedIn: state.authentication.loggedIn });
+export default connect(mapStateToProps, { setAlert, register, loadUser })(
+  Register
+);
