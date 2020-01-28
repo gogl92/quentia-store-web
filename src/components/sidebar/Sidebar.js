@@ -24,7 +24,7 @@ const Sidebar = () => (
       <Link to="/gallery">
         <FontAwesomeIcon icon={faHeart} />
       </Link>
-      <Link to="/register">
+      <Link to="/profile">
         <FontAwesomeIcon icon={faUser} />
       </Link>
       <Link to="/register">

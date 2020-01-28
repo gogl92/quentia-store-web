@@ -19,8 +19,9 @@ import Parse from "parse";
 // const initialState = currentUser ? { loggedIn: true, currentUser } : {};
 
 const initialState = {
-  loggedIn: false,
+  loggedIn: null,
   user: null
+  // sessionToken: localStorage.getItem("sessionToken")
 };
 
 export default function authentication(state = initialState, action) {
@@ -41,19 +42,21 @@ export default function authentication(state = initialState, action) {
         loggedIn: true,
         user: action.payload
       };
-    case LOGIN_FAILURE:
-      return {};
     case LOGOUT:
       return {};
     case REGISTER_REQUEST:
-      return { registering: true };
-    case REGISTER_SUCCESS:
+      // localStorage.setItem("sessionToken", action.payload.sessionToken);
       return { ...state, ...action.payload, loggedIn: true };
+    case REGISTER_SUCCESS:
+      return { user: action.payload, loggedIn: true };
     case REGISTER_FAILURE:
     case AUTH_ERROR:
+    case LOGIN_FAILURE:
+      localStorage.removeItem("sessionToken");
       console.error(action.payload);
       return {
         ...state,
+        token: null,
         error: action.payload,
         loggedIn: false
       };

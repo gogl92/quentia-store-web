@@ -7,13 +7,14 @@ import {
 } from "react-router-dom";
 import Navigation from "./components/layout/Navigation";
 import Footer from "./components/layout/Footer";
+import Alert from "./components/layout/AlertDiv";
 import Catalogue from "./components/catalogue/Catalogue";
 import Dashboard from "./components/dashboard/Dashboard";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Gallery from "./components/gallery/Gallery";
 import Favorites from "./components/favorites/Favorites";
-import { PrivateRoute } from "./components/privateRoute/PrivateRoute";
+import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import { history } from "./helpers/history";
 
 import Parse from "parse";
@@ -36,12 +37,14 @@ class App extends Component {
     Parse.serverURL = "http://34.73.39.87/parse";
   }
   render() {
+    const { loggedIn } = this.props;
     return (
       <Provider store={store}>
         <Router history={history}>
           <Fragment>
             <Navigation />
             <section className="container">
+              <Alert />
               {/* <AlertDiv /> */}
               <Switch>
                 <Route exact path="/" component={Catalogue} />

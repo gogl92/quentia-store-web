@@ -3,6 +3,8 @@ import { Col, Row, Form, FormGroup, Label, Input } from "reactstrap";
 import { Link, Redirect } from "react-router-dom";
 import { register, loadUser } from "../../actions/userActions";
 import { connect } from "react-redux";
+import { setAlert } from "../../actions/alertActions";
+import PropTypes from "prop-types";
 
 class Register extends Component {
   constructor(props) {
@@ -37,34 +39,42 @@ class Register extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
-    this.setState({ submitted: true });
     const { user } = this.state;
     if (
-      user.firstName &&
-      user.lastName &&
-      user.username &&
-      user.password &&
-      user.email &&
-      user.phone
+      !user.firstName ||
+      !user.lastName ||
+      !user.username ||
+      !user.password ||
+      !user.email ||
+      !user.phone
     ) {
+      this.props.setAlert("Favor de llenar los campos requeridos", "danger");
+    } else {
       this.props.register(user);
-      this.props.loadUser();
     }
-    this.setState({
-      firstName: "",
-      lastName: "",
-      username: "",
-      password: "",
-      email: "",
-      phone: "",
-      submitted: false
-    });
+    // if (
+    //   user.firstName &&
+    //   user.lastName &&
+    //   user.username &&
+    //   user.password &&
+    //   user.email &&
+    //   user.phone
+    // ) {
+    //   this.props.register(user);
+    //   // this.props.loadUser();
+    // }
+    this.setState({ submitted: true });
+    // this.setState({
+
+    // });
   }
 
   render() {
     const { registering } = this.props;
     const { user, submitted } = this.state;
+    if (this.props.loggedIn) {
+      return <Redirect to="/dashboard" />;
+    }
     return (
       <Fragment>
         <Row>
@@ -85,9 +95,9 @@ class Register extends Component {
                         submitted && !user.firstName ? "is-invalid" : ""
                       }
                     />
-                    {submitted && !user.firstName && (
+                    {/* {submitted && !user.firstName && (
                       <div className="help-block">First Name is required</div>
-                    )}
+                    )} */}
                   </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -96,16 +106,15 @@ class Register extends Component {
                     <Input
                       type="text"
                       name="lastName"
-                      id="lastName"
                       value={user.lastName}
                       onChange={this.handleChange}
                       className={
-                        submitted && !user.firstName ? "is-invalid" : ""
+                        submitted && !user.lastName ? "is-invalid" : ""
                       }
                     />
-                    {submitted && !user.lastName && (
+                    {/* {submitted && !user.lastName && (
                       <div className="help-block">Last Name is required</div>
-                    )}
+                    )} */}
                   </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -119,9 +128,9 @@ class Register extends Component {
                       onChange={this.handleChange}
                       className={submitted && !user.email ? "is-invalid" : ""}
                     />
-                    {submitted && !user.email && (
+                    {/* {submitted && !user.email && (
                       <div className="help-block">Email is required</div>
-                    )}
+                    )} */}
                   </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -135,9 +144,9 @@ class Register extends Component {
                       onChange={this.handleChange}
                       className={submitted && !user.phone ? "is-invalid" : ""}
                     />
-                    {submitted && !user.phone && (
+                    {/* {submitted && !user.phone && (
                       <div className="help-block">Phone is required</div>
-                    )}
+                    )} */}
                   </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -153,9 +162,9 @@ class Register extends Component {
                         submitted && !user.password ? "is-invalid" : ""
                       }
                     />
-                    {submitted && !user.password && (
+                    {/* {submitted && !user.password && (
                       <div className="help-block">Phone is required</div>
-                    )}
+                    )} */}
                   </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -171,9 +180,9 @@ class Register extends Component {
                         submitted && !user.username ? "is-invalid" : ""
                       }
                     />
-                    {submitted && !user.username && (
+                    {/* {submitted && !user.username && (
                       <div className="help-block">Phone is required</div>
-                    )}
+                    )} */}
                   </FormGroup>
                 </Col>
               </Row>
@@ -221,4 +230,9 @@ class Register extends Component {
 //   const { user, submitted } = this.state;
 
 // };
-export default connect(null, { register, loadUser })(Register);
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool.isRequired
+};
+export default connect(null, { setAlert, register, loadUser })(Register);

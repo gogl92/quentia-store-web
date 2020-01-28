@@ -1,6 +1,8 @@
-export const SUCCESS = "ALERT_SUCCESS";
-export const ERROR = "ALERT_ERROR";
-export const CLEAR = "ALERT_CLEAR";
+// export const SUCCESS = "ALERT_SUCCESS";
+// export const ERROR = "ALERT_ERROR";
+// export const CLEAR = "ALERT_CLEAR";
+export const SET_ALERT = "SET_ALERT";
+export const REMOVE_ALERT = "REMOVE_ALERT";
 // ---- REGISTER ----
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";

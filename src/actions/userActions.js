@@ -10,6 +10,7 @@ import {
   USER_LOADED
 } from "./types";
 import { history } from "../helpers/history";
+import { setAlert } from "./alertActions";
 import Parse from "parse";
 
 Parse.initialize("9a1fd5f82c592f443c9bf564a1652aff5dc57c13", null);
@@ -20,16 +21,18 @@ Parse.serverURL = "http://34.73.39.87/parse";
 // const initialState = currentUser ? { loggedIn: true, currentUser } : {};
 
 export const loadUser = () => async dispatch => {
-  try {
-    let currentUser = Parse.User.current();
-    dispatch({
-      type: USER_LOADED,
-      payload: currentUser
-    });
-  } catch (err) {
-    dispatch({
-      type: AUTH_ERROR
-    });
+  let currentUser = Parse.User.current();
+  if (currentUser) {
+    try {
+      dispatch({
+        type: USER_LOADED,
+        payload: currentUser
+      });
+    } catch (err) {
+      dispatch({
+        type: AUTH_ERROR
+      });
+    }
   }
 };
 // LOGIN
@@ -39,17 +42,24 @@ export const login = (username, password) => async dispatch => {
   //   payload: user
   // });
   try {
-    let user = await Parse.User.logIn(username, password);
+    const user = await Parse.User.logIn(username, password);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: user
     });
-    history.push("/");
+    dispatch(loadUser());
+    // history.push("/dashboard");
   } catch (err) {
-    dispatch({
-      type: LOGIN_FAILURE,
-      payload: err.message
-    });
+    const errors = err.message;
+    if (errors) {
+      dispatch(setAlert(errors, "danger"));
+    }
+    dispatch({ type: LOGIN_FAILURE });
+    // dispatch({
+    //   type: LOGIN_FAILURE,
+    //   payload: err.message
+    // });
+    // alert("Error: " + err.code + " " + err.message);
   }
 };
 
@@ -75,8 +85,13 @@ export const register = user => async dispatch => {
       type: REGISTER_SUCCESS,
       payload: newUser
     });
+    dispatch(loadUser());
   } catch (err) {
+    const errors = err.message;
+    if (errors) {
+      dispatch(setAlert(errors, "danger"));
+    }
     dispatch({ type: REGISTER_FAILURE });
-    alert("Error: " + err.code + " " + err.message);
+    // alert("Error: " + err.code + " " + err.message);
   }
 };

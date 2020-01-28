@@ -1,10 +1,102 @@
-import React, { Fragment, Component } from "react";
+import React, { Fragment, Component, useState } from "react";
 import { Col, Row, Form, FormGroup, Label, Input } from "reactstrap";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { login, loadUser } from "../../actions/userActions";
+import { setAlert } from "../../actions/alertActions";
 import PropTypes from "prop-types";
 import { history } from "../../helpers/history";
+
+// const Login = ({ login, loggedIn, setAlert }) => {
+//   const [formData, setFormData] = useState({
+//     username: "",
+//     password: "",
+//     submitted: false
+//   });
+
+//   const { username, password, submitted } = formData;
+//   const handleChange = e => {
+//     setFormData({ ...formData, [e.target.name]: e.target.value });
+//   };
+//   const handleSubmit = async e => {
+//     e.preventDefault();
+//     setFormData({ submitted: true });
+//     if (username && password) {
+//       login(username, password);
+//     } else {
+//       setAlert("Favor de llenar los campos requeridos", "danger");
+//     }
+
+//     // this.setState({
+//     //   username: "",
+//     //   password: "",
+//     //   submitted: false
+//     // });
+//     // history.push("/dashboard");
+//   };
+//   // if (loggedIn) {
+//   //   return <Redirect to="/dashboard" />;
+//   // }
+//   return (
+//     <Fragment>
+//       <Row>
+//         <Col md={8}>
+//           <Form name="form" onSubmit={e => handleSubmit(e)}>
+//             <h1>Inicia Sesión</h1>
+//             <hr />
+//             <Row form>
+//               <Col md={6}>
+//                 <FormGroup>
+//                   <Label for="username">Nombre de Usuario</Label>
+//                   <Input
+//                     type="text"
+//                     name="username"
+//                     value={username}
+//                     onChange={e => handleChange(e)}
+//                     className={
+//                       submitted && !username
+//                         ? "form-control is-invalid"
+//                         : "form-control"
+//                     }
+//                   />
+//                 </FormGroup>
+//               </Col>
+//               <Col md={6}>
+//                 <FormGroup>
+//                   <Label for="password">Contraseña</Label>
+//                   <input
+//                     type="password"
+//                     name="password"
+//                     value={password}
+//                     onChange={e => handleChange(e)}
+//                     className={
+//                       submitted && !password
+//                         ? "form-control is-invalid"
+//                         : "form-control"
+//                     }
+//                   />
+//                 </FormGroup>
+//               </Col>
+//             </Row>
+//             <button className="btn--main-pink">Iniciar Sesión</button>
+//             <div className="signIn">
+//               <p>
+//                 ¿No tienes una cuenta?{" "}
+//                 <Link to="/register">Regístrate Gratis</Link>
+//               </p>
+//             </div>
+//           </Form>
+//         </Col>
+//         <Col md={4}>
+//           <div className="social-signin">
+//             <h1>Inicia Sesión con Redes Sociales</h1>
+//             <p>Muy Pronto!</p>
+//           </div>
+//         </Col>
+//       </Row>
+//     </Fragment>
+//   );
+// };
 
 class Login extends Component {
   constructor(props) {
@@ -17,9 +109,9 @@ class Login extends Component {
       submitted: false
     };
   }
-  componentDidMount() {
-    this.props.login();
-  }
+  // componentDidMount() {
+  //   this.props.login();
+  // }
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -30,18 +122,21 @@ class Login extends Component {
     const { username, password } = this.state;
     if (username && password) {
       this.props.login(username, password);
-      this.props.loadUser();
+    } else {
+      this.props.setAlert("Favor de llenar los campos requeridos", "danger");
     }
-    this.setState({
-      username: "",
-      password: "",
-      submitted: false
-    });
+    // this.setState({
+    //   username: "",
+    //   password: "",
+    //   submitted: false
+    // });
     // history.push("/dashboard");
   };
   render() {
-    const { loggingIn } = this.props;
     const { username, password, submitted } = this.state;
+    if (this.props.loggedIn) {
+      return <Redirect to="/dashboard" />;
+    }
     return (
       <Fragment>
         <Row>
@@ -55,14 +150,15 @@ class Login extends Component {
                     <Label for="username">Nombre de Usuario</Label>
                     <Input
                       type="text"
-                      className="form-control"
                       name="username"
                       value={username}
                       onChange={this.handleChange}
+                      className={
+                        submitted && !username
+                          ? "form-control is-invalid"
+                          : "form-control"
+                      }
                     />
-                    {submitted && !username && (
-                      <div className="help-block">Username is required</div>
-                    )}
                   </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -70,14 +166,15 @@ class Login extends Component {
                     <Label for="password">Contraseña</Label>
                     <input
                       type="password"
-                      className="form-control"
                       name="password"
                       value={password}
                       onChange={this.handleChange}
+                      className={
+                        submitted && !password
+                          ? "form-control is-invalid"
+                          : "form-control"
+                      }
                     />
-                    {submitted && !password && (
-                      <div className="help-block">Password is required</div>
-                    )}
                   </FormGroup>
                 </Col>
               </Row>
@@ -102,5 +199,10 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => ({ loggedIn: state.authentication });
-export default connect(mapStateToProps, { login, loadUser })(Login);
+Login.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool.isRequired
+};
+const mapStateToProps = state => ({ loggedIn: state.authentication.loggedIn });
+export default connect(mapStateToProps, { login, loadUser, setAlert })(Login);
