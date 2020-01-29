@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from "react";
-import { Col, Row, Form, FormGroup, Label, Input } from "reactstrap";
+import { Container, Col, Row, Form, FormGroup, Label, Input } from "reactstrap";
 import { Link, Redirect } from "react-router-dom";
 import { register, loadUser } from "../../actions/userActions";
 import { connect } from "react-redux";
@@ -76,7 +76,7 @@ class Register extends Component {
       return <Redirect to="/dashboard" />;
     }
     return (
-      <Fragment>
+      <Container>
         <Row>
           <Col md={8}>
             <Form onSubmit={this.handleSubmit}>
@@ -207,7 +207,7 @@ class Register extends Component {
             </div>
           </Col>
         </Row>
-      </Fragment>
+      </Container>
     );
   }
 }

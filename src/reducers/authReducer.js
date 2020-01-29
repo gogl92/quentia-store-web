@@ -20,7 +20,9 @@ import Parse from "parse";
 
 const initialState = {
   loggedIn: null,
-  user: null
+  user: null,
+  token: "",
+  userId: ""
   // sessionToken: localStorage.getItem("sessionToken")
 };
 
@@ -40,10 +42,17 @@ export default function authentication(state = initialState, action) {
     case LOGIN_SUCCESS:
       return {
         loggedIn: true,
-        user: action.payload
+        token: action.payload.sessionToken,
+        user: action.payload,
+        userId: action.payload.objectId
       };
     case LOGOUT:
-      return {};
+      return {
+        loggedIn: false,
+        token: "",
+        userId: "",
+        user: {}
+      };
     case REGISTER_REQUEST:
       // localStorage.setItem("sessionToken", action.payload.sessionToken);
       return { ...state, ...action.payload, loggedIn: true };

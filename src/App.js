@@ -15,6 +15,7 @@ import Login from "./components/auth/Login";
 import Gallery from "./components/gallery/Gallery";
 import Favorites from "./components/favorites/Favorites";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
+import ProductForm from "./components/product/ProductForm";
 import { history } from "./helpers/history";
 
 import Parse from "parse";
@@ -42,24 +43,24 @@ class App extends Component {
         <Router history={history}>
           <Fragment>
             <Navigation />
-            <section className="container">
-              <Alert />
-              {/* <AlertDiv /> */}
-              <Switch>
-                <Route exact path="/" component={Catalogue} />
-                <Route exact path="/register" component={Register} />
-                <Route exact path="/login" component={Login} />
-                <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                <Route exact path="/gallery" component={Gallery} />
-                <Route exact path="/favorites" component={Favorites} />
-                {/* <Route exact path="/dashboard" component={Dashboard} /> */}
-                <Redirect from="*" to="/" />
-                {/* <PrivateRoute exact path="/gallery" component={Gallery} />
+            <Alert />
+            {/* <AlertDiv /> */}
+            <Switch>
+              <Route exact path="/" component={Catalogue} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/gallery" component={Gallery} />
+              <PrivateRoute exact path="/favorites" component={Favorites} />
+              <PrivateRoute exact path="/add" component={ProductForm} />
+              {/* <Route exact path="/dashboard" component={Dashboard} /> */}
+              <Redirect from="*" to="/" />
+              {/* <PrivateRoute exact path="/gallery" component={Gallery} />
                 <PrivateRoute exact path="/favorites" component={Favorites} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} /> */}
-                {/* <PrivateRoute exact path="/add" component={ProductForm} /> */}
-              </Switch>
-            </section>
+              {/* <PrivateRoute exact path="/add" component={ProductForm} /> */}
+            </Switch>
+
             <Footer />
           </Fragment>
         </Router>

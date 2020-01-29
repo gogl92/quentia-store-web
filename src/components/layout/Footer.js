@@ -1,17 +1,5 @@
 import React, { Fragment } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 const Footer = () => {
   return (

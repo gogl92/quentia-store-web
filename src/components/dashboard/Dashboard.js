@@ -1,12 +1,13 @@
 import React, { Fragment, useState } from "react";
+import { Container } from "reactstrap";
 import Sidebar from "../sidebar/Sidebar";
 
 const Dashboard = props => {
   return (
-    <Fragment>
+    <Container>
       <Sidebar />
       <div>Dashboard</div>
-    </Fragment>
+    </Container>
   );
 };
 

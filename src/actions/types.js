@@ -16,6 +16,14 @@ export const LOGOUT = "LOGOUT";
 // ---- AUTH ----
 export const AUTH_ERROR = "AUTH_ERROR";
 export const USER_LOADED = "USER_LOADED";
+// ---- PRODUCT ----
+export const UPLOAD_PRODUCT_REQUEST = "UPLOAD_PRODUCT_REQUEST";
+export const UPLOAD_PRODUCT_SUCCESS = "UPLOAD_PRODUCT_SUCCESS";
+export const UPLOAD_PRODUCT_FAIL = "UPLOAD_PRODUCT_FAIL";
+export const GET_PRODUCTS = "GET_PRODUCTS";
+export const GET_PRODUCTS_FAIL = "GET_PRODUCTS_FAIL";
+export const FILTER_PRODUCTS_BY_SIZE = "FILTER_PRODUCTS_BY_SIZE";
+export const FILTER_PRODUCTS_BY_PRICE = "FILTER_PRODUCTS_BY_PRICE";
 
 // -------------------
 // ---- ADMIN ----

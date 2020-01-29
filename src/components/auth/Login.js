@@ -1,5 +1,5 @@
 import React, { Fragment, Component, useState } from "react";
-import { Col, Row, Form, FormGroup, Label, Input } from "reactstrap";
+import { Col, Row, Form, FormGroup, Label, Input, Container } from "reactstrap";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { login, loadUser } from "../../actions/userActions";
@@ -138,7 +138,7 @@ class Login extends Component {
       return <Redirect to="/dashboard" />;
     }
     return (
-      <Fragment>
+      <Container>
         <Row>
           <Col md={8}>
             <Form name="form" onSubmit={this.handleSubmit}>
@@ -194,7 +194,7 @@ class Login extends Component {
             </div>
           </Col>
         </Row>
-      </Fragment>
+      </Container>
     );
   }
 }
