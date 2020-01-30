@@ -1,0 +1,31 @@
+.product__detail {
+  img {
+    height: 700px;
+    width: auto;
+  }
+  &--container {
+    &--info {
+      margin-top: 3rem;
+      .description {
+        p {
+          text-align: justify;
+        }
+      }
+    }
+    h1 {
+      font-family: $main-font;
+    }
+  }
+  .prices {
+    span {
+      font-family: $secondary-font;
+      &:first-child {
+        margin-right: 3rem;
+        color: darken($main-pink, 5%);
+        font-size: 1.5rem;
+      }
+      color: #e2c1b7;
+      font-size: 1.5rem;
+    }
+  }
+}

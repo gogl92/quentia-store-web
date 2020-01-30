@@ -13,14 +13,19 @@ const ProductItem = ({ product }) => {
     <div className="wrapper">
       <div className="container-2">
         <div className="top">
-          <Link>
-            <img className="img-fluid" alt="img" src="" />
+          <Link to={`/product/${product.id}`}>
+            <img
+              className="img-fluid"
+              alt="img"
+              src={product.get("images")[0].url()}
+            />
           </Link>
         </div>
         <div className="bottom">
           <div className="left">
             <div className="product-content">
               <h1>{product.get("item_name")}</h1>
+              <h1>{product.get("objectId")}</h1>
               <hr />
               <div className="details">
                 {/* <p>$ {data.price_rent}</p> */}

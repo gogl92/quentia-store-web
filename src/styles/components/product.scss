@@ -1,21 +1,23 @@
 .wrapper {
   width: 300px;
   height: 500px;
+
   background: white;
   margin: auto;
   position: relative;
   overflow: hidden;
-  border-radius: 5px;
+
   box-shadow: 0;
   transform: scale(0.95);
-  transition: box-shadow 0.5s, transform 0.5s;
-  &:hover {
-    box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
-  }
 
   .container-2 {
     width: 100%;
     height: 100%;
+
+    transition: box-shadow 0.5s, transform 0.5s;
+    &:hover {
+      box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
+    }
     .top {
       height: 75%;
       width: 100%;
@@ -24,6 +26,7 @@
       width: 200%;
       height: 25%;
       transition: transform 0.5s;
+
       h1 {
         font-family: $main-font;
         text-transform: uppercase;
@@ -52,7 +55,8 @@
         background: #fff;
         position: relative;
         float: left;
-
+        border-left: 1px solid #cacaca;
+        border-right: 1px solid #cacaca;
         .product-content {
           padding: 14px;
           float: left;
@@ -104,6 +108,10 @@
     // border-radius: 0px 0px 200px 200px;
     transition: all 0.3s, border-radius 0.3s, top 1s;
     overflow: hidden;
+    @include respond("big-desktop") {
+      top: -80px;
+      right: -77px;
+    }
     .icon {
       position: absolute;
       right: 90px;

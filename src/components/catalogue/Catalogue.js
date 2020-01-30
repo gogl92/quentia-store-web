@@ -2,7 +2,8 @@ import React, { Fragment, useEffect } from "react";
 import { Row, Container, Col } from "reactstrap";
 import Sidebar from "../sidebar/Sidebar";
 import { connect } from "react-redux";
-import ProductItem from "../product/ProductItem";
+import ProductItem from "../products/ProductItem";
+import SearchBar from "../searchBar/SearchBar";
 import { getProducts } from "../../actions/productActions";
 import Filters from "../filters/Filters";
 import PropTypes from "prop-types";
@@ -14,6 +15,9 @@ const Catalogue = ({ loggedIn, getProducts, product: { products } }) => {
   return (
     <Fragment>
       {loggedIn ? <Sidebar /> : <Fragment></Fragment>}
+      <Container>
+        <SearchBar />
+      </Container>
       <div className="container-fluid">
         <Row>
           <Col sm={12} md={2}>

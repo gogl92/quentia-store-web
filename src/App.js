@@ -15,7 +15,8 @@ import Login from "./components/auth/Login";
 import Gallery from "./components/gallery/Gallery";
 import Favorites from "./components/favorites/Favorites";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
-import ProductForm from "./components/product/ProductForm";
+import ProductForm from "./components/products/ProductForm";
+import Product from "./components/product/Product";
 import { history } from "./helpers/history";
 
 import Parse from "parse";
@@ -47,6 +48,7 @@ class App extends Component {
             {/* <AlertDiv /> */}
             <Switch>
               <Route exact path="/" component={Catalogue} />
+              <Route exact path="/product/:id" component={Product} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />

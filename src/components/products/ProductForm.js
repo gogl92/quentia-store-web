@@ -84,10 +84,7 @@ class ProductForm extends Component {
         <Container>
           <h1>Agregar Vestido</h1>
           <hr />
-          <p>
-            Proporciona los siguientes datos de tu vestido. Los campos con * son
-            obligatorios.
-          </p>
+          <p>Proporciona los siguientes datos de tu vestido.</p>
           <Form onSubmit={this.handleSubmit} enctype="multipart/form-data">
             <Row>
               <Col md={6}>
@@ -97,7 +94,6 @@ class ProductForm extends Component {
                     type="text"
                     name="item_name"
                     id="productName"
-                    placeholder="Vestido Largo Rojo"
                     onChange={this.handleChange}
                     value={this.state.item_name}
                   />
@@ -110,7 +106,6 @@ class ProductForm extends Component {
                     type="text"
                     name="brand"
                     id="productBrand"
-                    placeholder="Marca del Vestido"
                     onChange={this.handleChange}
                     value={this.state.brand}
                   />

@@ -5,7 +5,9 @@ import {
   GET_PRODUCTS,
   GET_PRODUCTS_FAIL,
   FILTER_PRODUCTS_BY_SIZE,
-  FILTER_PRODUCTS_BY_PRICE
+  FILTER_PRODUCTS_BY_PRICE,
+  GET_PRODUCT,
+  GET_PRODUCT_FAIL
 } from "./types";
 import { setAlert } from "./alertActions";
 import Parse from "parse";
@@ -29,6 +31,28 @@ export const getProducts = () => async dispatch => {
     }
     dispatch({ type: GET_PRODUCTS_FAIL });
   }
+};
+
+export const getProduct = objectId => async dispatch => {
+  const Item = Parse.Object.extend("Item");
+  const query = new Parse.Query(Item);
+  query.get(`${objectId}`).then(
+    item => {
+      const objectId = item.id;
+      dispatch({
+        type: GET_PRODUCT,
+        payload: item
+      });
+      console.log(item);
+    },
+    err => {
+      const errors = err.message;
+      if (errors) {
+        dispatch(setAlert(errors, "danger"));
+      }
+      dispatch({ type: GET_PRODUCT_FAIL });
+    }
+  );
 };
 
 export const addProduct = ({

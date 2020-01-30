@@ -4,7 +4,9 @@ import {
   UPLOAD_PRODUCT_FAIL,
   GET_PRODUCTS,
   GET_PRODUCTS_FAIL,
-  FILTER_PRODUCTS_BY_SIZE
+  FILTER_PRODUCTS_BY_SIZE,
+  GET_PRODUCT,
+  GET_PRODUCT_FAIL
 } from "../actions/types";
 
 const initialState = {
@@ -25,10 +27,18 @@ export default (state = initialState, action) => {
         products: [...state.products, action.payload]
       };
     case GET_PRODUCTS:
-      console.log(action.payload[0]);
+      console.log(action.payload);
       return {
         ...state,
-        products: action.payload
+        products: action.payload,
+        product: {}
+      };
+    case GET_PRODUCT:
+      console.log(action.payload);
+      return {
+        ...state,
+        product: action.payload,
+        products: {}
       };
     case FILTER_PRODUCTS_BY_SIZE:
       return {
@@ -38,6 +48,7 @@ export default (state = initialState, action) => {
       };
     case UPLOAD_PRODUCT_FAIL:
     case GET_PRODUCTS_FAIL:
+    case GET_PRODUCT_FAIL:
       console.log(action.payload);
       return {
         ...state,

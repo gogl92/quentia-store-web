@@ -22,8 +22,13 @@ export const UPLOAD_PRODUCT_SUCCESS = "UPLOAD_PRODUCT_SUCCESS";
 export const UPLOAD_PRODUCT_FAIL = "UPLOAD_PRODUCT_FAIL";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_PRODUCTS_FAIL = "GET_PRODUCTS_FAIL";
+export const GET_PRODUCT = "GET_PRODUCT";
+export const GET_PRODUCT_FAIL = "GET_PRODUCT_FAIL";
 export const FILTER_PRODUCTS_BY_SIZE = "FILTER_PRODUCTS_BY_SIZE";
 export const FILTER_PRODUCTS_BY_PRICE = "FILTER_PRODUCTS_BY_PRICE";
+export const GET_SIZES = "GET_SIZES";
+export const GET_COLORS = "GET_COLORS";
+export const GET_BRAND = "GET_BRAND";
 
 // -------------------
 // ---- ADMIN ----

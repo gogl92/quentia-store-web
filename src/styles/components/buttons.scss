@@ -1,5 +1,5 @@
 .btn--main-pink {
-  background-color: $main-pink !important;
+  background-color: $main-pink;
   border-radius: 0;
   font-family: $secondary-font;
   border: none !important;
@@ -10,13 +10,17 @@
   text-align: center;
   line-height: 22px;
   text-transform: uppercase;
+  transition: background 0.2s;
+  &:hover {
+    background-color: darken($main-pink, 5%);
+  }
   @media only screen and (min-width: 1920px) {
     padding: 0.9rem 2rem;
   }
 }
 .btn--main-pink__sm {
   padding: 0.6rem 1rem;
-  background-color: $main-pink !important;
+  background-color: $main-pink;
   border-radius: 0;
   font-family: $secondary-font;
   border: none !important;
@@ -26,6 +30,10 @@
   text-align: center;
   line-height: 22px;
   text-transform: uppercase;
+  transition: background 0.2s;
+  &:hover {
+    background-color: darken($main-pink, 5%);
+  }
 }
 .btn--dark-pink {
   padding: 0.6rem 1rem;
