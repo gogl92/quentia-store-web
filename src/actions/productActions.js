@@ -75,47 +75,70 @@ export const getBrands = () => async dispatch => {
   }
 };
 
-export const addProduct = ({
-  size,
-  ocation,
-  color,
-  item_value,
-  brand,
-  price_rent,
-  item_length,
+export const addProduct = (
   item_name,
-  images,
-  type,
-  condition,
-  description,
-  price_sale,
-  location,
-  size_description
-}) => async dispatch => {
+  brand
+  // size,
+  // ocation,
+  // color,
+  // item_value,
+  // brand,
+  // price_rent,
+  // item_length,
+  // item_name,
+  // images,
+  // type,
+  // condition,
+  // description,
+  // price_sale,
+  // location,
+  // size_description
+) => async dispatch => {
   const Item = Parse.Object.extend("Item");
-  let newItem = new Item();
+  const newItem = new Item();
+  const Brand = Parse.Object.extend("Brand");
+  const UserSchema = Parse.Object.extend("User");
   // newItem.save({ ...formData }).then(
-  newItem
-    .save({
-      brand,
-      item_name
-    })
-    .then(
-      newItem => {
-        dispatch({
-          type: UPLOAD_PRODUCT_SUCCESS,
-          payload: newItem
-        });
-        dispatch(setAlert("Product Added", "success"));
-      },
-      err => {
-        const errors = err.message;
-        if (errors) {
-          dispatch(setAlert(errors, "danger"));
-        }
-        dispatch({ type: UPLOAD_PRODUCT_FAIL });
+  newItem.set("item_name", item_name);
+  newItem.set("brand", Brand.createWithoutData(brand));
+  newItem.set("user_id", UserSchema.createWithoutData(Parse.User.current().id));
+  newItem.save().then(
+    newItem => {
+      dispatch({
+        type: UPLOAD_PRODUCT_SUCCESS,
+        payload: newItem
+      });
+      dispatch(setAlert("Product Added", "success"));
+    },
+    err => {
+      const errors = err.message;
+      if (errors) {
+        dispatch(setAlert(errors, "danger"));
       }
-    );
+      dispatch({ type: UPLOAD_PRODUCT_FAIL });
+    }
+  );
+  // newItem
+  //   .save({
+  //     brand: brand,
+  //     item_name: item_name
+  //   })
+  //   .then(
+  //     newItem => {
+  //       dispatch({
+  //         type: UPLOAD_PRODUCT_SUCCESS,
+  //         payload: newItem
+  //       });
+  //       dispatch(setAlert("Product Added", "success"));
+  //     },
+  //     err => {
+  //       const errors = err.message;
+  //       if (errors) {
+  //         dispatch(setAlert(errors, "danger"));
+  //       }
+  //       dispatch({ type: UPLOAD_PRODUCT_FAIL });
+  //     }
+  //   );
 };
 
 export const filterProductsBySize = (products, size) => async dispatch => {

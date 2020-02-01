@@ -36,7 +36,7 @@ const ProductForm = ({
     ocation: "",
     color: "",
     item_value: "",
-    brand: "",
+    brand: null,
     price_rent: "",
     item_length: "",
     item_name: "",
@@ -48,16 +48,24 @@ const ProductForm = ({
     location: "",
     size_description: ""
   });
-  // this.setState({ [e.target.name]: e.target.value });
-  const handleChange = e =>
-    setProductState({ [e.target.name]: e.target.value });
-  const populateOptions = () => {
-    return brands.map((brand, index) => (
-      <option key={index} value={brand}>
-        {brand}
-      </option>
-    ));
+  const handleOptionChange = e => {
+    setProductState({ ...productState, brand: e.target.value });
+    console.log(e.target.value);
   };
+
+  // this.setState({ [e.target.name]: e.target.value });
+  const handleChange = e => {
+    setProductState({ ...productState, [e.target.name]: e.target.value });
+    console.log(e.target.value);
+  };
+
+  // const populateOptions = () => {
+  //   return brands.map((brand, index) => (
+  //     <option key={index} value={brand}>
+  //       {brand}
+  //     </option>
+  //   ));
+  // };
   const handleSubmit = e => {
     e.preventDefault();
     const {
@@ -77,8 +85,8 @@ const ProductForm = ({
       location,
       size_description
     } = productState;
-    if (item_name) {
-      addProduct(item_name);
+    if (item_name && brand) {
+      addProduct(item_name, brand);
     } else {
       setAlert("Favor de llenar los campos requeridos", "danger");
     }
@@ -109,7 +117,7 @@ const ProductForm = ({
                 <Label for="productBrand">Marca</Label>
                 <Input
                   type="select"
-                  name="select"
+                  name="brand"
                   id="productBrand"
                   onChange={handleChange}
                 >
@@ -117,10 +125,7 @@ const ProductForm = ({
                     // <option key={brand.objectId} value={brand.Name}>
                     //   {brand}
                     // </option>
-                    <option
-                      key={brand.get("objectId")}
-                      value={brand.get("Name")}
-                    >
+                    <option key={brand.id} value={brand.id || ""}>
                       {brand.get("Name")}
                     </option>
                   ))}

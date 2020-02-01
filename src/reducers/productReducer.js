@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
     case UPLOAD_PRODUCT_SUCCESS:
       return {
         ...state,
-        products: [...state.products, action.payload]
+        product: action.payload
       };
     case GET_PRODUCTS:
       console.log(action.payload);
