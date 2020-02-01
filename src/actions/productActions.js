@@ -99,25 +99,31 @@ export const addProduct = (
   const Brand = Parse.Object.extend("Brand");
   const UserSchema = Parse.Object.extend("User");
   // newItem.save({ ...formData }).then(
-  newItem.set("item_name", item_name);
-  newItem.set("brand", Brand.createWithoutData(brand));
-  newItem.set("user_id", UserSchema.createWithoutData(Parse.User.current().id));
-  newItem.save().then(
-    newItem => {
-      dispatch({
-        type: UPLOAD_PRODUCT_SUCCESS,
-        payload: newItem
-      });
-      dispatch(setAlert("Product Added", "success"));
-    },
-    err => {
-      const errors = err.message;
-      if (errors) {
-        dispatch(setAlert(errors, "danger"));
+  // newItem.set("item_name", item_name);
+  // newItem.set("brand", Brand.createWithoutData(brand));
+  // newItem.set("user_id", UserSchema.createWithoutData(Parse.User.current().id));
+  newItem
+    .save({
+      item_name: item_name,
+      brand: Brand.createWithoutData(brand),
+      user_id: UserSchema.createWithoutData(Parse.User.current().id)
+    })
+    .then(
+      newItem => {
+        dispatch({
+          type: UPLOAD_PRODUCT_SUCCESS,
+          payload: newItem
+        });
+        dispatch(setAlert("Product Added", "success"));
+      },
+      err => {
+        const errors = err.message;
+        if (errors) {
+          dispatch(setAlert(errors, "danger"));
+        }
+        dispatch({ type: UPLOAD_PRODUCT_FAIL });
       }
-      dispatch({ type: UPLOAD_PRODUCT_FAIL });
-    }
-  );
+    );
   // newItem
   //   .save({
   //     brand: brand,

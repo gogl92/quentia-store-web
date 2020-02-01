@@ -125,7 +125,7 @@ const ProductForm = ({
                     // <option key={brand.objectId} value={brand.Name}>
                     //   {brand}
                     // </option>
-                    <option key={brand.id} value={brand.id || ""}>
+                    <option key={brand.id} value={brand.id}>
                       {brand.get("Name")}
                     </option>
                   ))}
