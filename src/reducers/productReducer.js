@@ -6,7 +6,9 @@ import {
   GET_PRODUCTS_FAIL,
   FILTER_PRODUCTS_BY_SIZE,
   GET_PRODUCT,
-  GET_PRODUCT_FAIL
+  GET_PRODUCT_FAIL,
+  GET_BRANDS,
+  GET_BRANDS_FAIL
 } from "../actions/types";
 
 const initialState = {
@@ -14,7 +16,8 @@ const initialState = {
   products: [],
   error: null,
   filteredItems: [],
-  size: ""
+  size: "",
+  brands: []
 };
 
 export default (state = initialState, action) => {
@@ -33,6 +36,11 @@ export default (state = initialState, action) => {
         products: action.payload,
         product: {}
       };
+    case GET_BRANDS:
+      return {
+        ...state,
+        brands: action.payload
+      };
     case GET_PRODUCT:
       console.log(action.payload);
       return {
@@ -49,6 +57,7 @@ export default (state = initialState, action) => {
     case UPLOAD_PRODUCT_FAIL:
     case GET_PRODUCTS_FAIL:
     case GET_PRODUCT_FAIL:
+    case GET_BRANDS_FAIL:
       console.log(action.payload);
       return {
         ...state,

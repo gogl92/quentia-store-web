@@ -1,10 +1,6 @@
 import React from "react";
 import { Col } from "reactstrap";
-import {
-  faShoppingBag,
-  faEye,
-  faHeart
-} from "@fortawesome/free-solid-svg-icons";
+import { faBriefcase, faEye, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
@@ -40,7 +36,7 @@ const ProductItem = ({ product }) => {
               <FontAwesomeIcon icon={faHeart} /> me gusta
             </div>
             <div className="buy">
-              <FontAwesomeIcon icon={faShoppingBag} />
+              <FontAwesomeIcon icon={faBriefcase} />
             </div>
           </div>
         </div>

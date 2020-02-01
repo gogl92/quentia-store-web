@@ -16,6 +16,8 @@ export const LOGOUT = "LOGOUT";
 // ---- AUTH ----
 export const AUTH_ERROR = "AUTH_ERROR";
 export const USER_LOADED = "USER_LOADED";
+export const RECOVER_PASSWORD = "RECOVER_PASSWORD";
+export const RECOVER_PASSWORD_FAIL = "RECOVER_PASSWORD_FAIL";
 // ---- PRODUCT ----
 export const UPLOAD_PRODUCT_REQUEST = "UPLOAD_PRODUCT_REQUEST";
 export const UPLOAD_PRODUCT_SUCCESS = "UPLOAD_PRODUCT_SUCCESS";
@@ -28,7 +30,8 @@ export const FILTER_PRODUCTS_BY_SIZE = "FILTER_PRODUCTS_BY_SIZE";
 export const FILTER_PRODUCTS_BY_PRICE = "FILTER_PRODUCTS_BY_PRICE";
 export const GET_SIZES = "GET_SIZES";
 export const GET_COLORS = "GET_COLORS";
-export const GET_BRAND = "GET_BRAND";
+export const GET_BRANDS = "GET_BRANDS";
+export const GET_BRANDS_FAIL = "GET_BRANDS_FAIL";
 
 // -------------------
 // ---- ADMIN ----

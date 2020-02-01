@@ -185,6 +185,12 @@ class Login extends Component {
                   <Link to="/register">Regístrate Gratis</Link>
                 </p>
               </div>
+              <div className="signIn">
+                <p>
+                  Recuperar contraseña
+                  <Link to="/register">Regístrate Gratis</Link>
+                </p>
+              </div>
             </Form>
           </Col>
           <Col md={4}>

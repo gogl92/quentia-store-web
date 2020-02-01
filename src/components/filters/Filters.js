@@ -143,6 +143,7 @@ class Filters extends Component {
             </Label>
           </FormGroup>
         </div>
+        <span>Ciudad</span>
       </div>
     );
   }
