@@ -15,9 +15,7 @@ const initialState = {
   product: null,
   products: [],
   error: null,
-  filteredItems: [],
-  size: "",
-  brands: []
+  filteredItems: []
 };
 
 export default (state = initialState, action) => {
@@ -35,11 +33,6 @@ export default (state = initialState, action) => {
         ...state,
         products: action.payload,
         product: {}
-      };
-    case GET_BRANDS:
-      return {
-        ...state,
-        brands: action.payload
       };
     case GET_PRODUCT:
       console.log(action.payload);

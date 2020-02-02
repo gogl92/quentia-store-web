@@ -4,20 +4,26 @@ import Sidebar from "../sidebar/Sidebar";
 import { connect } from "react-redux";
 import ProductItem from "../products/ProductItem";
 import SearchBar from "../searchBar/SearchBar";
-import { getProducts, getBrands } from "../../actions/productActions";
+import {
+  getProducts,
+  getBrands,
+  getTypesOfSale
+} from "../../actions/productActions";
 import Filters from "../filters/Filters";
 import PropTypes from "prop-types";
 
 const Catalogue = ({
   loggedIn,
   getProducts,
+  getTypesOfSale,
   getBrands,
   product: { products }
 }) => {
   useEffect(() => {
     getProducts();
     getBrands();
-  }, [getProducts, getBrands]);
+    getTypesOfSale();
+  }, [getProducts, getBrands, getTypesOfSale]);
   return (
     <Fragment>
       {loggedIn ? <Sidebar /> : <Fragment></Fragment>}
@@ -48,10 +54,16 @@ Catalogue.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
   getProducts: PropTypes.func.isRequired,
   product: PropTypes.object.isRequired,
-  getBrands: PropTypes.func.isRequired
+  getBrands: PropTypes.func.isRequired,
+  getTypesOfSale: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   loggedIn: state.authentication.loggedIn,
-  product: state.product
+  product: state.product,
+  data: state.data
 });
-export default connect(mapStateToProps, { getProducts, getBrands })(Catalogue);
+export default connect(mapStateToProps, {
+  getProducts,
+  getBrands,
+  getTypesOfSale
+})(Catalogue);

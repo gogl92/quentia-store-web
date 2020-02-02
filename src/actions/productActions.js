@@ -9,7 +9,9 @@ import {
   GET_PRODUCT,
   GET_PRODUCT_FAIL,
   GET_BRANDS,
-  GET_BRANDS_FAIL
+  GET_BRANDS_FAIL,
+  GET_TYPES_OF_SALE,
+  GET_TYPES_OF_SALE_FAIL
 } from "./types";
 import { setAlert } from "./alertActions";
 import Parse from "parse";
@@ -72,6 +74,24 @@ export const getBrands = () => async dispatch => {
       dispatch(setAlert(errors, "danger"));
     }
     dispatch({ type: GET_BRANDS_FAIL });
+  }
+};
+
+export const getTypesOfSale = () => async dispatch => {
+  const TypesOfSale = Parse.Object.extend("TypeOfSale");
+  const query = new Parse.Query(TypesOfSale);
+  try {
+    const results = await query.find();
+    dispatch({
+      type: GET_TYPES_OF_SALE,
+      payload: results
+    });
+  } catch (err) {
+    const errors = err.message;
+    if (errors) {
+      dispatch(setAlert(errors, "danger"));
+    }
+    dispatch({ type: GET_TYPES_OF_SALE_FAIL });
   }
 };
 

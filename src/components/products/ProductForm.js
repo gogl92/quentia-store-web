@@ -83,7 +83,8 @@ const ProductForm = ({
       description,
       price_sale,
       location,
-      size_description
+      size_description,
+      typeOfSale
     } = productState;
     if (item_name && brand) {
       addProduct(item_name, brand);
