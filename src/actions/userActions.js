@@ -41,8 +41,8 @@ export const login = (username, password) => async dispatch => {
   //   type: LOGIN_REQUEST,
   //   payload: user
   // });
-  const user = await Parse.User.logIn(username, password);
   try {
+    const user = await Parse.User.logIn(username, password);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: user
