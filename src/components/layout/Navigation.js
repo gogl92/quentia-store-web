@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import {
   Collapse,
   Navbar,
@@ -20,7 +21,7 @@ import {
 //  toggle = () => {
 //    setisOpen: !isOpen
 //  }
-const Navigation = () => {
+const Navigation = ({ loggedIn }) => {
   const authLinks = (
     <NavItem>
       <NavLink>
@@ -63,7 +64,7 @@ const Navigation = () => {
             </NavLink>
           </NavItem>
           <UncontrolledDropdown nav inNavbar>
-            <Fragment>
+            {/* <Fragment>
               <DropdownToggle nav caret>
                 Mi Perfil
               </DropdownToggle>
@@ -77,12 +78,12 @@ const Navigation = () => {
                   <Link to="/register">Registrarse</Link>
                 </DropdownItem>
               </DropdownMenu>
-            </Fragment>
-            {/* {!loading && (
+            </Fragment> */}
+            {
               <Fragment>
                 {loggedIn ? <Fragment></Fragment> : guestLinks}
               </Fragment>
-            )} */}
+            }
           </UncontrolledDropdown>
         </Nav>
       </Collapse>
@@ -93,6 +94,6 @@ const Navigation = () => {
 //   logout: PropTypes.func.isRequired,
 //   auth: PropTypes.object.isRequired
 // };
-// const mapStateToProps = state => ({ auth: state.auth });
+const mapStateToProps = state => ({ loggedIn: state.authentication.loggedIn });
 
-export default Navigation;
+export default connect(mapStateToProps, {})(Navigation);
