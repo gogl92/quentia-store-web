@@ -7,7 +7,8 @@ import {
   LOGIN_FAILURE,
   LOGOUT,
   AUTH_ERROR,
-  USER_LOADED
+  USER_LOADED,
+  LOGOUT_FAIL
 } from "./types";
 import { history } from "../helpers/history";
 import { setAlert } from "./alertActions";
@@ -64,10 +65,22 @@ export const login = (username, password) => async dispatch => {
 };
 
 // LOGOUT
-export const logout = () => {
-  Parse.User.logOut().then(() => {
-    let currentUser = Parse.User.current(); // this will now be null
-  });
+export const logout = () => async dispatch => {
+  try {
+    Parse.User.logOut().then(() => {
+      const currentUser = Parse.User.current();
+      dispatch({
+        type: LOGOUT,
+        payload: currentUser
+      }); // this will now be null
+    });
+  } catch (err) {
+    const errors = err.message;
+    if (errors) {
+      dispatch(setAlert(errors, "danger"));
+    }
+    dispatch({ type: LOGOUT_FAIL });
+  }
 };
 
 // REGISTER

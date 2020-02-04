@@ -7,12 +7,15 @@ import {
   faBell,
   faHeart
 } from "@fortawesome/free-solid-svg-icons";
+import { connect } from "react-redux";
+import { logout } from "../../actions/userActions";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const Sidebar = () => (
+const Sidebar = ({ logout }) => (
   <div class="sidenav">
     <div className="top">
-      <Link>
+      <Link onClick={logout}>
         {" "}
         <FontAwesomeIcon icon={faSignOutAlt} />
       </Link>
@@ -98,7 +101,11 @@ const Sidebar = () => (
 //   ]
 // ];
 
-export default Sidebar;
+Sidebar.propTypes = {
+  logout: PropTypes.func.isRequired
+};
+
+export default connect(null, { logout })(Sidebar);
 // export default connect(mapStateToProps, { logout })(Sidebar);
 // import React, { Fragment } from "react";
 // import SideNav, {

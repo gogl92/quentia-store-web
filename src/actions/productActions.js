@@ -252,9 +252,9 @@ export const addProduct = (
       brand: Brand.createWithoutData(brand),
       user_id: UserSchema.createWithoutData(Parse.User.current().id),
       size: Size.createWithoutData(size),
-      occasion: Occasion.createWithoutData(occasion)
+      occasion: Occasion.createWithoutData(occasion),
       // color: Color.createWithoutData(color),
-      // typeOfSale: TypeOfSale.createWithoutData(typeOfSale),
+      typeOfSale: TypeOfSale.createWithoutData(typeOfSale)
       // item_event_type: ItemEventType.createWithoutData(item_event_type),
       // item_special_occasion: SpecialOccasion.createWithoutData(
       //   item_special_occasion

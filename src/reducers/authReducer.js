@@ -42,15 +42,15 @@ export default function authentication(state = initialState, action) {
     case LOGIN_SUCCESS:
       return {
         loggedIn: true,
-        token: action.payload.sessionToken,
-        user: action.payload,
-        userId: action.payload.objectId
+        // token: action.payload.sessionToken,
+        user: action.payload
+        // userId: action.payload.objectId
       };
     case LOGOUT:
       return {
         loggedIn: false,
-        token: "",
-        userId: "",
+        // token: "",
+        // userId: "",
         user: {}
       };
     case REGISTER_REQUEST:
