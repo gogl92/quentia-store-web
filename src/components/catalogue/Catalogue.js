@@ -7,7 +7,13 @@ import SearchBar from "../searchBar/SearchBar";
 import {
   getProducts,
   getBrands,
-  getTypesOfSale
+  getTypesOfSale,
+  getSizes,
+  getOccasions,
+  getLengths,
+  getEventTypes,
+  getColors,
+  getSpecialOccasions
 } from "../../actions/productActions";
 import Filters from "../filters/Filters";
 import PropTypes from "prop-types";
@@ -17,13 +23,25 @@ const Catalogue = ({
   getProducts,
   getTypesOfSale,
   getBrands,
+  getSizes,
+  getOccasions,
+  getLengths,
+  getEventTypes,
+  getColors,
+  getSpecialOccasions,
   product: { products }
 }) => {
   useEffect(() => {
     getProducts();
     getBrands();
     getTypesOfSale();
-  }, [getProducts, getBrands, getTypesOfSale]);
+    getSizes();
+    getOccasions();
+    getLengths();
+    getEventTypes();
+    getColors();
+    getSpecialOccasions();
+  }, []);
   return (
     <Fragment>
       {loggedIn ? <Sidebar /> : <Fragment></Fragment>}
@@ -55,7 +73,13 @@ Catalogue.propTypes = {
   getProducts: PropTypes.func.isRequired,
   product: PropTypes.object.isRequired,
   getBrands: PropTypes.func.isRequired,
-  getTypesOfSale: PropTypes.func.isRequired
+  getTypesOfSale: PropTypes.func.isRequired,
+  getSizes: PropTypes.func.isRequired,
+  getLengths: PropTypes.func.isRequired,
+  getOccasions: PropTypes.func.isRequired,
+  getEventTypes: PropTypes.func.isRequired,
+  getColors: PropTypes.func.isRequired,
+  getSpecialOccasions: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   loggedIn: state.authentication.loggedIn,
@@ -65,5 +89,11 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   getProducts,
   getBrands,
-  getTypesOfSale
+  getTypesOfSale,
+  getSizes,
+  getLengths,
+  getOccasions,
+  getEventTypes,
+  getColors,
+  getSpecialOccasions
 })(Catalogue);

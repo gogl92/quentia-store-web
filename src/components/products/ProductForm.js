@@ -16,37 +16,71 @@ import {
 import {
   getBrands,
   addProduct,
-  getProducts
+  getTypesOfSale,
+  getSizes,
+  getOccasions,
+  getLengths,
+  getEventTypes,
+  getColors,
+  getSpecialOccasions
 } from "../../actions/productActions";
 import { setAlert } from "../../actions/alertActions";
 import { Link, Redirect } from "react-router-dom";
 
+function compare(a, b) {
+  return a.label > b.label ? 1 : b.label > a.label ? -1 : 0;
+}
 const ProductForm = ({
   loggedIn,
   getBrands,
+  getTypesOfSale,
+  getSizes,
+  getOccasions,
+  getLengths,
+  getEventTypes,
+  getColors,
+  getSpecialOccasions,
   addProduct,
-  product: { brands }
+  data: {
+    brands,
+    typesOfSale,
+    sizes,
+    item_Lengths,
+    occasions,
+    item_event_types,
+    item_special_occasions,
+    colors
+  }
 }) => {
   useEffect(() => {
     getBrands();
+    getTypesOfSale();
+    getSizes();
+    getOccasions();
+    getLengths();
+    getEventTypes();
+    getColors();
+    getSpecialOccasions();
     // eslint-disable-next-line
-  }, [getBrands]);
+  }, []);
   const [productState, setProductState] = useState({
     size: "",
-    ocation: "",
+    occasion: "",
     color: "",
     item_value: "",
-    brand: null,
+    brand: "",
     price_rent: "",
-    item_length: "",
+    item_length2: "",
     item_name: "",
     images: "",
-    type: "",
+    typeOfSale: "",
     condition: "",
     description: "",
     price_sale: "",
     location: "",
-    size_description: ""
+    size_description: "",
+    item_event_type: "",
+    item_special_occasion: ""
   });
   const handleOptionChange = e => {
     setProductState({ ...productState, brand: e.target.value });
@@ -70,24 +104,57 @@ const ProductForm = ({
     e.preventDefault();
     const {
       size,
-      ocation,
+      occasion,
       color,
       item_value,
       brand,
       price_rent,
-      item_length,
+      item_length2,
       item_name,
       images,
-      type,
+      typeOfSale,
       condition,
       description,
       price_sale,
       location,
       size_description,
-      typeOfSale
+      item_event_type,
+      item_special_occasion
     } = productState;
-    if (item_name && brand) {
-      addProduct(item_name, brand);
+    if (
+      item_name ||
+      brand ||
+      size ||
+      occasion ||
+      color ||
+      item_value ||
+      price_sale ||
+      item_length2 ||
+      typeOfSale ||
+      condition ||
+      description ||
+      location ||
+      size_description ||
+      item_event_type ||
+      item_special_occasion
+    ) {
+      addProduct(
+        size,
+        occasion,
+        color,
+        item_value,
+        brand,
+        item_length2,
+        item_name,
+        typeOfSale,
+        condition,
+        description,
+        price_sale,
+        location,
+        size_description,
+        item_event_type,
+        item_special_occasion
+      );
     } else {
       setAlert("Favor de llenar los campos requeridos", "danger");
     }
@@ -109,7 +176,6 @@ const ProductForm = ({
                   name="item_name"
                   id="productName"
                   onChange={handleChange}
-                  value={productState.item_name}
                 />
               </FormGroup>
             </Col>
@@ -122,7 +188,7 @@ const ProductForm = ({
                   id="productBrand"
                   onChange={handleChange}
                 >
-                  {brands.map((brand, index) => (
+                  {brands.map(brand => (
                     // <option key={brand.objectId} value={brand.Name}>
                     //   {brand}
                     // </option>
@@ -141,10 +207,15 @@ const ProductForm = ({
                 id="typeOfSaleSelect"
                 onChange={handleChange}
               >
-                <option></option>
-                <option>Renta</option>
-                <option>Venta</option>
-                <option>Ambos</option>
+                <option value="">Selecciona una opción</option>
+                {typesOfSale.map(type => (
+                  // <option key={brand.objectId} value={brand.Name}>
+                  //   {brand}
+                  // </option>
+                  <option key={type.id} value={type.id}>
+                    {type.get("Name")}
+                  </option>
+                ))}
               </Input>
             </Col>
             <Col md={6}>
@@ -179,9 +250,9 @@ const ProductForm = ({
                   id="productConditionSelect"
                   onChange={handleChange}
                 >
-                  <option></option>
-                  <option>Nuevo</option>
-                  <option>Usado</option>
+                  <option value="">Selecciona una opción</option>
+                  <option value="1">Nuevo</option>
+                  <option value="0">Usado</option>
                 </Input>
               </FormGroup>
             </Col>
@@ -205,8 +276,15 @@ const ProductForm = ({
                   id="productSizeSelect"
                   onChange={handleChange}
                 >
-                  <option>0</option>
-                  <option>2</option>
+                  <option value="">Selecciona una opción</option>
+                  {sizes.map(size => (
+                    // <option key={brand.objectId} value={brand.Name}>
+                    //   {brand}
+                    // </option>
+                    <option key={size.id} value={size.id}>
+                      {size.get("Size")}
+                    </option>
+                  ))}
                 </Input>
               </FormGroup>
             </Col>
@@ -242,8 +320,15 @@ const ProductForm = ({
                   id="productLengthSelect"
                   onChange={handleChange}
                 >
-                  <option>Vestido Corto</option>
-                  <option>Vestido Largo</option>
+                  <option value="">Selecciona una opción</option>
+                  {item_Lengths.map(length => (
+                    // <option key={brand.objectId} value={brand.Name}>
+                    //   {brand}
+                    // </option>
+                    <option key={length.id} value={length.id}>
+                      {length.get("Name")}
+                    </option>
+                  ))}
                 </Input>
               </FormGroup>
             </Col>
@@ -256,9 +341,15 @@ const ProductForm = ({
                   id="productDressTimeDaySelect"
                   onChange={handleChange}
                 >
-                  <option>Vestido de Día</option>
-                  <option>Vestido de Noche</option>
-                  <option>Ambos</option>
+                  <option value="">Selecciona una opción</option>
+                  {occasions.map(occasion => (
+                    // <option key={brand.objectId} value={brand.Name}>
+                    //   {brand}
+                    // </option>
+                    <option key={occasion.id} value={occasion.id}>
+                      {occasion.get("Name")}
+                    </option>
+                  ))}
                 </Input>
               </FormGroup>
             </Col>
@@ -271,8 +362,15 @@ const ProductForm = ({
                   id="productWearSelect"
                   onChange={handleChange}
                 >
-                  <option>Formal</option>
-                  <option>Casual</option>
+                  <option value="">Selecciona una opción</option>
+                  {item_event_types.map(item => (
+                    // <option key={brand.objectId} value={brand.Name}>
+                    //   {brand}
+                    // </option>
+                    <option key={item.id} value={item.id}>
+                      {item.get("Name")}
+                    </option>
+                  ))}
                 </Input>
               </FormGroup>
             </Col>
@@ -280,12 +378,21 @@ const ProductForm = ({
               <FormGroup>
                 <Label for="productColorSelect">Color</Label>
                 <Input
-                  type="color"
+                  type="select"
                   name="color"
                   id="productColorSelect"
-                  placeholder="color placeholder"
                   onChange={handleChange}
-                />
+                >
+                  <option value="">Selecciona una opción</option>
+                  {colors.map(color => (
+                    // <option key={brand.objectId} value={brand.Name}>
+                    //   {brand}
+                    // </option>
+                    <option key={color.id} value={color.id}>
+                      {color.get("Name")}
+                    </option>
+                  ))}
+                </Input>
               </FormGroup>
             </Col>
 
@@ -296,15 +403,20 @@ const ProductForm = ({
                 </Label>
                 <Input
                   type="select"
-                  name="ocation"
+                  name="item_special_occasion"
                   id="productSpecialOcasionSelect"
                   onChange={handleChange}
                 >
-                  <option>Ninguno</option>
-                  <option>Novia</option>
-                  <option>Quinceañera</option>
-                  <option>Primera Comunión</option>
-                  <option>Otros</option>
+                  <option value="">Selecciona una opción</option>
+                  {item_special_occasions.map(item => (
+                    // <option key={brand.objectId} value={brand.Name}>
+                    //   {brand}
+                    // </option>
+                    <option key={item.id} value={item.id}>
+                      {item.get("Name")}
+                    </option>
+                  ))}
+                  <option value="Ninguno">Ninguno</option>
                 </Input>
               </FormGroup>
             </Col>
@@ -337,13 +449,30 @@ const ProductForm = ({
 
 ProductForm.propTypes = {
   getBrands: PropTypes.func.isRequired,
+  getTypesOfSale: PropTypes.func.isRequired,
+  getSizes: PropTypes.func.isRequired,
+  getLengths: PropTypes.func.isRequired,
+  getOccasions: PropTypes.func.isRequired,
+  getEventTypes: PropTypes.func.isRequired,
+  getColors: PropTypes.func.isRequired,
+  getSpecialOccasions: PropTypes.func.isRequired,
   addProduct: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   loggedIn: state.authentication.loggedIn,
-  product: state.product
+  product: state.product,
+  data: state.data
 });
 
-export default connect(mapStateToProps, { getBrands, addProduct, setAlert })(
-  ProductForm
-);
+export default connect(mapStateToProps, {
+  getBrands,
+  getTypesOfSale,
+  getSizes,
+  getLengths,
+  getOccasions,
+  getEventTypes,
+  getColors,
+  getSpecialOccasions,
+  addProduct,
+  setAlert
+})(ProductForm);

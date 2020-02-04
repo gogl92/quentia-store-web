@@ -22,9 +22,10 @@ const initialState = {
   typesOfSale: [],
   sizes: [],
   item_Lengths: [],
-  occassions: [],
+  occasions: [],
   item_event_types: [],
-  item_special_occasions: []
+  item_special_occasions: [],
+  colors: []
 };
 
 export default (state = initialState, action) => {
@@ -44,9 +45,39 @@ export default (state = initialState, action) => {
         ...state,
         sizes: action.payload
       };
+    case GET_LENGTHS:
+      return {
+        ...state,
+        item_Lengths: action.payload
+      };
+    case GET_OCCASIONS:
+      return {
+        ...state,
+        occasions: action.payload
+      };
+    case GET_EVENTS:
+      return {
+        ...state,
+        item_event_types: action.payload
+      };
+    case GET_COLORS:
+      return {
+        ...state,
+        colors: action.payload
+      };
+    case GET_SPECIAL_OCCASIONS:
+      return {
+        ...state,
+        item_special_occasions: action.payload
+      };
+    case GET_SPECIAL_OCCASIONS_FAIL:
+    case GET_COLORS_FAIL:
+    case GET_EVENTS_FAIL:
     case GET_BRANDS_FAIL:
     case GET_SIZES_FAIL:
     case GET_TYPES_OF_SALE_FAIL:
+    case GET_LENGTHS_FAIL:
+    case GET_OCCASIONS_FAIL:
       return {
         ...state,
         error: action.payload
