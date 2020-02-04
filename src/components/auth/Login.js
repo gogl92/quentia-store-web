@@ -184,11 +184,8 @@ class Login extends Component {
                   ¿No tienes una cuenta?{" "}
                   <Link to="/register">Regístrate Gratis</Link>
                 </p>
-              </div>
-              <div className="signIn">
                 <p>
-                  Recuperar contraseña
-                  <Link to="/register">Regístrate Gratis</Link>
+                  <Link to="/recover">Recuperar contraseña</Link>
                 </p>
               </div>
             </Form>

@@ -8,7 +8,9 @@ import {
   LOGOUT,
   AUTH_ERROR,
   USER_LOADED,
-  LOGOUT_FAIL
+  LOGOUT_FAIL,
+  RECOVER_PASSWORD,
+  RECOVER_PASSWORD_FAIL
 } from "./types";
 import { history } from "../helpers/history";
 import { setAlert } from "./alertActions";
@@ -107,4 +109,23 @@ export const register = user => async dispatch => {
     dispatch({ type: REGISTER_FAILURE });
     // alert("Error: " + err.code + " " + err.message);
   }
+};
+
+// RECOVER PASSWORD
+export const recoverPassword = mail => async dispatch => {
+  Parse.User.requestPasswordReset(mail)
+    .then(() => {
+      dispatch({
+        type: RECOVER_PASSWORD,
+        payload: {}
+      });
+      dispatch(setAlert("Revisa tu email", "success"));
+    })
+    .catch(err => {
+      const errors = err.message;
+      if (errors) {
+        dispatch(setAlert(errors, "danger"));
+      }
+      dispatch({ type: RECOVER_PASSWORD_FAIL });
+    });
 };

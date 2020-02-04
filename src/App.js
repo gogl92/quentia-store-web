@@ -12,6 +12,7 @@ import Catalogue from "./components/catalogue/Catalogue";
 import Dashboard from "./components/dashboard/Dashboard";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+import Recover from "./components/auth/Recover";
 import Gallery from "./components/gallery/Gallery";
 import Favorites from "./components/favorites/Favorites";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
@@ -51,6 +52,7 @@ class App extends Component {
               <Route exact path="/product/:id" component={Product} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/recover" component={Recover} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path="/gallery" component={Gallery} />
               <PrivateRoute exact path="/favorites" component={Favorites} />

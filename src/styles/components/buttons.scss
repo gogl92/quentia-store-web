@@ -11,6 +11,9 @@
   line-height: 22px;
   text-transform: uppercase;
   transition: background 0.2s;
+  &--no-upp {
+    text-transform: capitalize;
+  }
   &:hover {
     background-color: darken($main-pink, 5%);
   }
