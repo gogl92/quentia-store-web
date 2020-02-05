@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
 const ProductItem = ({ product }) => {
-  console.log(product);
+  console.log("en product item component", product);
   return (
     <div className="wrapper">
       <div className="container-2">

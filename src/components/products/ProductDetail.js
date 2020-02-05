@@ -1,41 +1,99 @@
-import React, { useEffect, Fragment } from "react";
-import PropTypes from "prop-types";
+import React, { Fragment } from "react";
 import { Row, Container, Col } from "reactstrap";
-import { connect } from "react-redux";
-import { getProduct } from "../../actions/productActions";
-import Sidebar from "../sidebar/Sidebar";
 
-const ProductDetail = ({ product }) => (
-  <Container className="product__detail">
-    {/* {loggedIn ? <Sidebar /> : <Fragment></Fragment>} */}
-    <Row>
-      <Col md={6}>
-        <img src="https://quentia.mx/img/header-photo.jpg" alt="" />
-      </Col>
-      <Col md={6}>
-        <div className="product__detail--container">
-          <h1>Vestido Super Chick</h1>
-          <p className="text-muted">Vestido de Día</p>
-          <div className="prices">
-            <span>$900.00 Renta</span>
-            <span>$3,000.00 Venta</span>
-          </div>
-          <div className="product__detail--container--info">
-            <div className="description">
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
-                quae hic explicabo aliquam autem dolore natus dolorum numquam
-                facilis dicta, temporibus ipsam vero velit inventore mollitia
-                voluptates recusandae eligendi ipsa esse nostrum voluptatibus,
-                veritatis iste suscipit saepe! Beatae, placeat mollitia.
+export const ProductDetail = ({ product }) => {
+  console.log("en product detail", product);
+  return (
+    <Container className="product__detail">
+      <Row>
+        <Col md={5}>
+          <img
+            className="img-fluid"
+            src="https://quentia.mx/img/header-photo.jpg"
+            alt=""
+          />
+        </Col>
+        <Col md={7}>
+          <div className="product__detail--container">
+            <h1>{product.get("item_name")}</h1>
+            <div className="product__detail--subtitle">
+              <p className="product__detail--brand">
+                <span>Marca:</span> {product.get("brand")}
+              </p>
+              <p className="product__detail--type">
+                {product.get("type") === "Día"
+                  ? "Vestido de día"
+                  : "Vestido de Noche"}
               </p>
             </div>
+            <div className="product__detail--prices">
+              {!product.get("price_rent") ? (
+                <Fragment>
+                  <span>
+                    Renta:{" "}
+                    {new Intl.NumberFormat("mx-MX", {
+                      style: "currency",
+                      currency: "MXN"
+                    }).format(product.get("price_sale"))}
+                  </span>
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <span>
+                    Venta:{" "}
+                    {new Intl.NumberFormat("mx-MX", {
+                      style: "currency",
+                      currency: "MXN"
+                    }).format(product.get("price_sale"))}
+                  </span>
+                  <span>
+                    Renta:{" "}
+                    {new Intl.NumberFormat("mx-MX", {
+                      style: "currency",
+                      currency: "MXN"
+                    }).format(product.get("price_rent"))}
+                  </span>
+                </Fragment>
+              )}
+              {/* {product.get("price_sale") && product.get("price_rent") ? (
+                <Fragment>
+                  <span>
+                    Renta:{" "}
+                    {new Intl.NumberFormat("mx-MX", {
+                      style: "currency",
+                      currency: "MXN"
+                    }).format(product.get("price_rent"))}
+                  </span>
+                  <span>
+                    Venta:{" "}
+                    {new Intl.NumberFormat("mx-MX", {
+                      style: "currency",
+                      currency: "MXN"
+                    }).format(product.get("price_sale"))}
+                  </span>
+                </Fragment>
+              ) : (
+                <span></span>
+              )} */}
+            </div>
+            <div className="product__detail--description">
+              <h4>Información del Vestido</h4>
+              <span>Descripción</span>
+              <p>{product.get("description")}</p>
+            </div>
+            <div className="product__detail--actions">
+              <button>corazon</button>
+              <button>baul</button>
+              <button>Rentar</button>
+              <button>Comprar</button>
+            </div>
           </div>
-        </div>
-      </Col>
-    </Row>
-  </Container>
-);
+        </Col>
+      </Row>
+    </Container>
+  );
+};
+
 // class ProductDetail extends Component {
 //   constructor(props) {
 //     super(props);
@@ -74,13 +132,14 @@ const ProductDetail = ({ product }) => (
 //     );
 //   }
 // }
-ProductDetail.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
-  getProduct: PropTypes.func.isRequired,
-  product: PropTypes.object.isRequired
-};
-const mapStateToProps = state => ({
-  loggedIn: state.authentication.loggedIn,
-  product: state.product.product
-});
-export default connect(mapStateToProps, { getProduct })(ProductDetail);
+// ProductDetail.propTypes = {
+//   loggedIn: PropTypes.bool.isRequired,
+//   getProduct: PropTypes.func.isRequired,
+//   product: PropTypes.object.isRequired
+// };
+// const mapStateToProps = state => ({
+//   loggedIn: state.authentication.loggedIn,
+//   product: state.product
+// });
+// export default connect(mapStateToProps, { getProduct })(ProductDetail);
+export default ProductDetail;

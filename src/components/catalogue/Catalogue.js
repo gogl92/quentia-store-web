@@ -41,7 +41,7 @@ const Catalogue = ({
     // getEventTypes();
     // getColors();
     // getSpecialOccasions();
-  }, []);
+  }, [getProducts]);
   return (
     <Fragment>
       {loggedIn ? <Sidebar /> : <Fragment></Fragment>}

@@ -9,13 +9,15 @@ import ProductDetail from "../products/ProductDetail";
 const Product = ({ loggedIn, getProduct, product: { product }, match }) => {
   useEffect(() => {
     getProduct(match.params.id);
-  }, [getProduct]);
-  return (
+  }, [getProduct, match.params.id]);
+  return product ? (
     <Container>
       {loggedIn ? <Sidebar /> : <Fragment></Fragment>}
       <ProductDetail product={product} />
       {console.log("en product js", product)}
     </Container>
+  ) : (
+    <Fragment></Fragment>
   );
 };
 

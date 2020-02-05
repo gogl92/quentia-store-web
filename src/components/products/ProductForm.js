@@ -25,18 +25,18 @@ export const ProductForm = ({ addProduct, setAlert }) => {
     type: "",
     color: "",
     item_length: "",
-    item_value: 1,
-    condition: 0,
+    item_value: 0,
+    condition: null,
     description: "",
-    price_sale: 1,
+    price_sale: 0,
     location: "",
     size_description: "",
-    aviability: 1,
     wear_type: "",
     special_occasion: "",
     submitted: false,
     success: false,
-    images: null
+    images: null,
+    availability: null
   });
   const handleChange = e => {
     setFormData({
@@ -44,7 +44,8 @@ export const ProductForm = ({ addProduct, setAlert }) => {
       [e.target.name]:
         e.target.name === "item_value" ||
         e.target.name === "price_sale" ||
-        e.target.name === "condition"
+        e.target.name === "condition" ||
+        e.target.name === "availability"
           ? parseInt(e.target.value)
           : e.target.value
     });
@@ -67,7 +68,8 @@ export const ProductForm = ({ addProduct, setAlert }) => {
     aviability,
     wear_type,
     special_occasion,
-    images
+    availability
+    // images
   } = formData;
   const handleSubmit = e => {
     e.preventDefault();
@@ -81,13 +83,15 @@ export const ProductForm = ({ addProduct, setAlert }) => {
       formData.color === "" ||
       formData.item_length === "" ||
       formData.item_value === 1 ||
+      formData.condition === NaN ||
       formData.description === "" ||
       formData.price_sale === 1 ||
       formData.location === "" ||
       formData.size_description === "" ||
       formData.wear_type === "" ||
-      formData.special_occasion === "" ||
-      formData.images.length < 0
+      // formData.special_occasion === "" ||
+      formData.availability === ""
+      // formData.images.length < 0
     ) {
       setAlert("Favor de llenar los campos requeridos", "danger");
     } else {
@@ -108,7 +112,9 @@ export const ProductForm = ({ addProduct, setAlert }) => {
         aviability,
         wear_type,
         special_occasion,
-        images
+        availability
+        // item_day_time
+        // images
       );
       setFormData({ ...formData, success: true });
     }
@@ -174,18 +180,20 @@ export const ProductForm = ({ addProduct, setAlert }) => {
               <Label for="typeOfSaleSelect">Renta/Venta</Label>
               <Input
                 type="select"
-                name="type"
+                name="availability"
                 id="typeOfSaleSelect"
                 onChange={handleChange}
-                value={type}
+                value={availability}
                 className={
-                  formData.submitted && !formData.type
+                  formData.submitted && !formData.availability
                     ? "form-control is-invalid"
                     : "form-control"
                 }
               >
                 <option value="">Selecciona una opción</option>
-                <option value="Renta">Renta</option>
+                <option value="2">Renta</option>
+                <option value="3">Venta</option>
+                <option value="1">Ambos</option>
                 {/* {typesOfSale.map(type => (
                   // <option key={brand.objectId} value={brand.Name}>
                   //   {brand}
@@ -285,7 +293,21 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                   }
                 >
                   <option value="">Selecciona una opción</option>
-                  <option>Tamaño 1</option>
+                  <option value="0">0</option>
+                  <option value="2">2</option>
+                  <option value="4">4</option>
+                  <option value="6">6</option>
+                  <option value="8">8</option>
+                  <option value="10">10</option>
+                  <option value="12">12</option>
+                  <option value="14">14</option>
+                  <option value="16">16</option>
+                  <option value="XS">XS</option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="XXL">XXL</option>
                   {/* {sizes.map(size => (
                     // <option key={brand.objectId} value={brand.Name}>
                     //   {brand}
@@ -348,6 +370,7 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                   }
                 >
                   <option value="">Selecciona una opción</option>
+                  <option value="1">Corto</option>
                   <option value="2">Largo</option>
                   {/* {item_Lengths.map(length => (
                     // <option key={brand.objectId} value={brand.Name}>
@@ -362,21 +385,23 @@ export const ProductForm = ({ addProduct, setAlert }) => {
             </Col>
             <Col md={4}>
               <FormGroup>
-                <Label for="productDressTimeDaySelect">Ocasión</Label>
+                <Label for="productDressTimeDaySelect">Día/Noche</Label>
                 <Input
                   type="select"
-                  name="occasion"
+                  name="type"
                   id="productDressTimeDaySelect"
                   onChange={handleChange}
-                  value={occasion}
+                  value={type}
                   className={
-                    formData.submitted && !formData.occasion
+                    formData.submitted && !formData.type
                       ? "form-control is-invalid"
                       : "form-control"
                   }
                 >
                   <option value="">Selecciona una opción</option>
-                  <option value="ocasion 1">Ocasión1</option>
+                  <option value="Día">Vestido de día</option>
+                  <option value="Noche">Vestido de noche</option>
+                  <option value="Ambos">Ambos</option>
                   {/* {occasions.map(occasion => (
                     // <option key={brand.objectId} value={brand.Name}>
                     //   {brand}
@@ -403,7 +428,8 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                   }
                 >
                   <option value="">Selecciona una opción</option>
-                  <option value="formal">Formal</option>
+                  <option value="Formal">Formal</option>
+                  <option value="Casual">Casual</option>
                   {/* {item_event_types.map(item => (
                     // <option key={brand.objectId} value={brand.Name}>
                     //   {brand}
@@ -432,6 +458,9 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                 >
                   <option value="">Selecciona una opción</option>
                   <option value="rosa">Rosa</option>
+                  <option value="blanco">Blanco</option>
+                  <option value="Negro">Negro</option>
+                  <option value="Amarillo">Amarillo</option>
                   {/* {colors.map(color => (
                     // <option key={brand.objectId} value={brand.Name}>
                     //   {brand}
@@ -451,17 +480,20 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                 </Label>
                 <Input
                   type="select"
-                  name="special_occasion"
-                  id="productSpecialOcasionSelect"
+                  name="occasion"
+                  id="productOcasionSelect"
                   onChange={handleChange}
                   className={
-                    formData.submitted && !formData.special_occasion
+                    formData.submitted && !formData.occasion
                       ? "form-control is-invalid"
                       : "form-control"
                   }
                 >
                   <option value="">Selecciona una opción</option>
-                  <option value="opcion 1">Opción 1</option>
+                  <option value="Novia">Novia</option>
+                  <option value="Quinceañera">Quinceañera</option>
+                  <option value="Primera Comunión">Primera Comunión</option>
+                  <option value="Otros">Otros</option>
                   {/* {item_special_occasions.map(item => (
                     // <option key={brand.objectId} value={brand.Name}>
                     //   {brand}

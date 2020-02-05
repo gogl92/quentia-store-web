@@ -31,15 +31,13 @@ export default (state = initialState, action) => {
       console.log(action.payload);
       return {
         ...state,
-        products: action.payload,
-        product: {}
+        products: action.payload
       };
     case GET_PRODUCT:
-      console.log(action.payload);
+      console.log("get product", action.payload);
       return {
         ...state,
-        product: action.payload,
-        products: {}
+        product: action.payload
       };
     case FILTER_PRODUCTS_BY_SIZE:
       return {

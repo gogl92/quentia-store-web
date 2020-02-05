@@ -56,7 +56,7 @@ export const getProduct = objectId => async dispatch => {
   const query = new Parse.Query(Item);
   query.get(`${objectId}`).then(
     item => {
-      const objectId = item.id;
+      // const objectId = item.id;
       dispatch({
         type: GET_PRODUCT,
         payload: item
@@ -233,7 +233,10 @@ export const addProduct = (
   aviability,
   wear_type,
   special_occasion,
-  images
+  availability
+  // item_day_time
+  // images,
+
   // size,
   // occasion,
   // color,
@@ -254,22 +257,22 @@ export const addProduct = (
     const Item = Parse.Object.extend("Item");
     const newItem = new Item();
     const UserSchema = Parse.Object.extend("User");
-    const image = new Parse.File(images);
-    image.save().then(
-      function() {
-        dispatch({
-          type: UPLOAD_IMAGE,
-          payload: newItem
-        });
-      },
-      function(err) {
-        const errors = err.message;
-        if (errors) {
-          dispatch(setAlert(errors, "danger"));
-        }
-        dispatch({ type: UPLOAD_IMAGE_FAIL });
-      }
-    );
+    // const image = new Parse.File(images, "image/png");
+    // image.save().then(
+    //   function() {
+    //     dispatch({
+    //       type: UPLOAD_IMAGE,
+    //       payload: newItem
+    //     });
+    //   },
+    //   function(err) {
+    //     const errors = err.message;
+    //     if (errors) {
+    //       dispatch(setAlert(errors, "danger"));
+    //     }
+    //     dispatch({ type: UPLOAD_IMAGE_FAIL });
+    //   }
+    // );
     newItem
       .save({
         user_id: UserSchema.createWithoutData(Parse.User.current().id),
@@ -289,7 +292,9 @@ export const addProduct = (
         aviability: aviability,
         wear_type: wear_type,
         special_occasion: special_occasion,
-        image: image
+        availability: availability
+        // item_day_time: item_day_time
+        // image: image
       })
       .then(newItem => {
         dispatch({
