@@ -21,26 +21,26 @@ import PropTypes from "prop-types";
 const Catalogue = ({
   loggedIn,
   getProducts,
-  getTypesOfSale,
-  getBrands,
-  getSizes,
-  getOccasions,
-  getLengths,
-  getEventTypes,
-  getColors,
-  getSpecialOccasions,
+  // getTypesOfSale,
+  // getBrands,
+  // getSizes,
+  // getOccasions,
+  // getLengths,
+  // getEventTypes,
+  // getColors,
+  // getSpecialOccasions,
   product: { products }
 }) => {
   useEffect(() => {
     getProducts();
-    getBrands();
-    getTypesOfSale();
-    getSizes();
-    getOccasions();
-    getLengths();
-    getEventTypes();
-    getColors();
-    getSpecialOccasions();
+    // getBrands();
+    // getTypesOfSale();
+    // getSizes();
+    // getOccasions();
+    // getLengths();
+    // getEventTypes();
+    // getColors();
+    // getSpecialOccasions();
   }, []);
   return (
     <Fragment>
@@ -71,29 +71,29 @@ const Catalogue = ({
 Catalogue.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
   getProducts: PropTypes.func.isRequired,
-  product: PropTypes.object.isRequired,
-  getBrands: PropTypes.func.isRequired,
-  getTypesOfSale: PropTypes.func.isRequired,
-  getSizes: PropTypes.func.isRequired,
-  getLengths: PropTypes.func.isRequired,
-  getOccasions: PropTypes.func.isRequired,
-  getEventTypes: PropTypes.func.isRequired,
-  getColors: PropTypes.func.isRequired,
-  getSpecialOccasions: PropTypes.func.isRequired
+  product: PropTypes.object.isRequired
+  // getBrands: PropTypes.func.isRequired,
+  // getTypesOfSale: PropTypes.func.isRequired,
+  // getSizes: PropTypes.func.isRequired,
+  // getLengths: PropTypes.func.isRequired,
+  // getOccasions: PropTypes.func.isRequired,
+  // getEventTypes: PropTypes.func.isRequired,
+  // getColors: PropTypes.func.isRequired,
+  // getSpecialOccasions: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   loggedIn: state.authentication.loggedIn,
-  product: state.product,
-  data: state.data
+  product: state.product
+  // data: state.data
 });
 export default connect(mapStateToProps, {
-  getProducts,
-  getBrands,
-  getTypesOfSale,
-  getSizes,
-  getLengths,
-  getOccasions,
-  getEventTypes,
-  getColors,
-  getSpecialOccasions
+  getProducts
+  // getBrands,
+  // getTypesOfSale,
+  // getSizes,
+  // getLengths,
+  // getOccasions,
+  // getEventTypes,
+  // getColors,
+  // getSpecialOccasions
 })(Catalogue);

@@ -16,7 +16,11 @@ import { connect } from "react-redux";
 import { recoverPassword } from "../../actions/userActions";
 
 const Recover = ({ recoverPassword, setAlert }) => {
-  const [state, setState] = useState({ email: "", submitted: false });
+  const [state, setState] = useState({
+    email: "",
+    submitted: false,
+    success: false
+  });
   // const handleChange = e => {
   //   setEmail({ email: e.target.value });
   //   console.log(e.target.value);
@@ -24,15 +28,16 @@ const Recover = ({ recoverPassword, setAlert }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (state.email !== "") {
-      recoverPassword(state.email);
-      setState({ email: "", submitted: true });
+    setState({ ...state, submitted: true });
+    if (state.email === "") {
       // setState({ email: "", submitted: false });
-    } else {
       setAlert("Ingresa un email", "danger");
+    } else {
+      recoverPassword(state.email);
+      setState({ ...state, email: "", success: true });
     }
   };
-  if (state.submitted) {
+  if (state.success) {
     return <Redirect to="/login" />;
   }
   return (
@@ -52,12 +57,11 @@ const Recover = ({ recoverPassword, setAlert }) => {
                 placeholder="Email"
                 value={state.email}
                 onChange={e => setState({ ...state, email: e.target.value })}
-
-                // className={
-                //   submitted && !username
-                //     ? "form-control is-invalid"
-                //     : "form-control"
-                // }
+                className={
+                  state.submitted && !state.email
+                    ? "form-control is-invalid"
+                    : "form-control"
+                }
               />
             </FormGroup>
             <input

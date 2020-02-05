@@ -7,29 +7,31 @@ import {
 const initialState = {
   size: null,
   color: "",
-  item_value: "",
+  occasion: null,
   brand: null,
-  price_rent: "",
+  item_value: "",
+  item_length: null,
   item_name: "",
   images: [],
   type: "",
   condition: 0,
   description: "",
   price_sale: "",
+  price_rent: "",
   location: "",
-  size_description: "",
-  typeOfSale: null,
-  item_length2: null,
-  occasion: null,
-  item_event_type: null,
-  item_special_occasion: null
+  size_description: ""
+  // typeOfSale: null,
+  // item_event_type: null,
+  // item_special_occasion: null
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case UPLOAD_PRODUCT_REQUEST:
+      console.log(action.payload);
       return {};
     case UPLOAD_PRODUCT_SUCCESS:
+      console.log(action.payload);
       return {
         ...state,
         newProduct: action.payload

@@ -1,5 +1,8 @@
-import React, { useState, Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import Sidebar from "../sidebar/Sidebar";
+// import { addProduct } from "../../actions/product";
 import {
   Container,
   Col,
@@ -10,13 +13,57 @@ import {
   Label,
   Input
 } from "reactstrap";
+import {
+  // getBrands,
+  addProduct
+  // getTypesOfSale,
+  // getSizes,
+  // getOccasions,
+  // getLengths,
+  // getEventTypes,
+  // getColors,
+  // getSpecialOccasions
+} from "../../actions/productActions";
 import { setAlert } from "../../actions/alertActions";
-import { connect } from "react-redux";
-import { addProduct } from "../../actions/productActions";
 import { Link, Redirect } from "react-router-dom";
-import PropTypes from "prop-types";
 
-export const ProductForm = ({ addProduct, setAlert }) => {
+function compare(a, b) {
+  return a.label > b.label ? 1 : b.label > a.label ? -1 : 0;
+}
+const ProductForm = ({
+  loggedIn,
+  // getBrands,
+  // getTypesOfSale,
+  // getSizes,
+  // getOccasions,
+  // getLengths,
+  // getEventTypes,
+  // getColors,
+  // getSpecialOccasions,
+  addProduct,
+  productUploadReducer
+  // data: {
+  //   brands,
+  //   typesOfSale,
+  //   sizes,
+  //   item_Lengths,
+  //   occasions,
+  //   item_event_types,
+  //   item_special_occasions,
+  //   colors
+  // }
+}) => {
+  // useEffect(() => {
+  //   getBrands();
+  //   getTypesOfSale();
+  //   getSizes();
+  //   getOccasions();
+  //   getLengths();
+  //   getEventTypes();
+  //   getColors();
+  //   getSpecialOccasions();
+  //   eslint-disable-next-line
+  // }, []);
   const [formData, setFormData] = useState({
     item_name: "",
     brand: "",
@@ -25,69 +72,96 @@ export const ProductForm = ({ addProduct, setAlert }) => {
     type: "",
     color: "",
     item_length: "",
-    item_value: 1,
+    item_value: "",
     condition: 0,
     description: "",
-    price_sale: 1,
+    price_sale: 0,
     location: "",
     size_description: "",
     aviability: 1,
-    wear_type: "",
-    special_occasion: "",
-    submitted: false,
-    success: false,
-    images: null
+    wearType: "",
+    special_occasion: ""
+    // images: [],
+    // price_rent: ""
+    // size: "",
+    // occasion: "",
+    // color: "",
+    // item_value: "",
+    // brand: "",
+    // price_rent: "",
+    // item_length2: "",
+    // item_name: "",
+    // images: "",
+    // typeOfSale: "",
+    // condition: "",
+    // description: "",
+    // price_sale: "",
+    // location: "",
+    // size_description: "",
+    // item_event_type: "",
+    // item_special_occasion: ""
   });
-  const handleChange = e => {
-    setFormData({
-      ...formData,
-      [e.target.name]:
-        e.target.name === "item_value" ||
-        e.target.name === "price_sale" ||
-        e.target.name === "condition"
-          ? parseInt(e.target.value)
-          : e.target.value
-    });
-    console.log(e.target.value);
-  };
+
   const {
-    item_name,
-    brand,
     size,
-    occasion,
-    type,
     color,
-    item_length,
+    occasion,
+    brand,
     item_value,
+    item_length,
+    item_name,
+    images,
+    type,
     condition,
     description,
     price_sale,
+    price_rent,
     location,
     size_description,
     aviability,
-    wear_type,
-    special_occasion,
-    images
+    wearType,
+    special_occasion
   } = formData;
+  // const handleOptionChange = e => {
+  //   setProductState({ ...productState, brand: e.target.value });
+  //   console.log(e.target.value);
+  // };
+
+  // this.setState({ [e.target.name]: e.target.value });
+  const handleChange = e => {
+    setFormData({
+      ...formData,
+      // price_sale: parseInt(e.target.value, 10),
+      // aviability: parseInt(e.target.value, 10),
+      [e.target.name]: e.target.value
+    });
+    console.log(e.target.value);
+  };
+
+  // const populateOptions = () => {
+  //   return brands.map((brand, index) => (
+  //     <option key={index} value={brand}>
+  //       {brand}
+  //     </option>
+  //   ));
+  // };
   const handleSubmit = e => {
     e.preventDefault();
-    setFormData({ ...formData, submitted: true });
     if (
-      formData.item_name === "" ||
-      formData.brand === "" ||
-      formData.size === "" ||
-      formData.occasion === "" ||
-      formData.type === "" ||
-      formData.color === "" ||
-      formData.item_length === "" ||
-      formData.item_value === 1 ||
-      formData.description === "" ||
-      formData.price_sale === 1 ||
-      formData.location === "" ||
-      formData.size_description === "" ||
-      formData.wear_type === "" ||
-      formData.special_occasion === "" ||
-      formData.images.length < 0
+      item_name === ""
+      // size &&
+      // occasion &&
+      // color &&
+      // item_value &&
+      // price_sale &&
+      // item_length &&
+      // type &&
+      // condition &&
+      // description &&
+      // location &&
+      // size_description
+      // item_event_type ||
+      // item_special_occasion
     ) {
       setAlert("Favor de llenar los campos requeridos", "danger");
     } else {
@@ -106,16 +180,13 @@ export const ProductForm = ({ addProduct, setAlert }) => {
         location,
         size_description,
         aviability,
-        wear_type,
-        special_occasion,
-        images
+        wearType,
+        special_occasion
+        // item_event_type,
+        // item_special_occasion
       );
-      setFormData({ ...formData, success: true });
     }
   };
-  if (formData.success) {
-    return <Redirect to="/gallery" />;
-  }
   return (
     <Fragment>
       <Sidebar />
@@ -133,12 +204,7 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                   name="item_name"
                   id="productName"
                   onChange={handleChange}
-                  value={formData.item_name}
-                  className={
-                    formData.submitted && !formData.item_name
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
+                  value={item_name}
                 />
               </FormGroup>
             </Col>
@@ -151,11 +217,6 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                   id="productBrand"
                   onChange={handleChange}
                   value={formData.brand}
-                  className={
-                    formData.submitted && !formData.brand
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
                 >
                   <option value="">Selecciona una opción</option>
                   <option value="Marca 1">Marca 1</option>
@@ -178,11 +239,6 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                 id="typeOfSaleSelect"
                 onChange={handleChange}
                 value={type}
-                className={
-                  formData.submitted && !formData.type
-                    ? "form-control is-invalid"
-                    : "form-control"
-                }
               >
                 <option value="">Selecciona una opción</option>
                 <option value="Renta">Renta</option>
@@ -206,11 +262,6 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                   placeholder="¿Cómo es tu vestido?"
                   onChange={handleChange}
                   value={description}
-                  className={
-                    formData.submitted && !formData.description
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
                 />
               </FormGroup>
             </Col>
@@ -218,16 +269,11 @@ export const ProductForm = ({ addProduct, setAlert }) => {
               <FormGroup>
                 <Label for="productValue">Valor Total de tu vestido</Label>
                 <Input
-                  type="number"
+                  type="text"
                   name="item_value"
                   id="productValue"
                   onChange={handleChange}
                   value={item_value}
-                  className={
-                    formData.submitted && !formData.item_value
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
                 />
               </FormGroup>
             </Col>
@@ -240,11 +286,6 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                   id="productConditionSelect"
                   onChange={handleChange}
                   value={condition}
-                  className={
-                    formData.submitted && !formData.condition
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
                 >
                   <option value="">Selecciona una opción</option>
                   <option value="1">Nuevo</option>
@@ -256,16 +297,11 @@ export const ProductForm = ({ addProduct, setAlert }) => {
               <FormGroup>
                 <Label for="productPrice">Precio de Venta</Label>
                 <Input
-                  type="number"
+                  type="text"
                   name="price_sale"
                   id="productPrice"
                   onChange={handleChange}
                   value={price_sale}
-                  className={
-                    formData.submitted && !formData.price_sale
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
                 />
               </FormGroup>
             </Col>
@@ -278,11 +314,6 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                   id="productSizeSelect"
                   onChange={handleChange}
                   value={size}
-                  className={
-                    formData.submitted && !formData.size
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
                 >
                   <option value="">Selecciona una opción</option>
                   <option>Tamaño 1</option>
@@ -306,11 +337,6 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                   id="productSizeDetails"
                   onChange={handleChange}
                   value={size_description}
-                  className={
-                    formData.submitted && !formData.size_description
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
                 />
               </FormGroup>
             </Col>
@@ -324,11 +350,6 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                   placeholder="(pega la url de Google Maps)"
                   onChange={handleChange}
                   value={location}
-                  className={
-                    formData.submitted && !formData.location
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
                 />
               </FormGroup>
             </Col>
@@ -341,11 +362,6 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                   id="productLengthSelect"
                   onChange={handleChange}
                   value={item_length}
-                  className={
-                    formData.submitted && !formData.item_length
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
                 >
                   <option value="">Selecciona una opción</option>
                   <option value="2">Largo</option>
@@ -369,11 +385,6 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                   id="productDressTimeDaySelect"
                   onChange={handleChange}
                   value={occasion}
-                  className={
-                    formData.submitted && !formData.occasion
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
                 >
                   <option value="">Selecciona una opción</option>
                   <option value="ocasion 1">Ocasión1</option>
@@ -393,14 +404,9 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                 <Label for="productWearSelect">Formal/Casual</Label>
                 <Input
                   type="select"
-                  name="wear_type"
+                  name="wearType"
                   id="productWearSelect"
                   onChange={handleChange}
-                  className={
-                    formData.submitted && !formData.wearType
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
                 >
                   <option value="">Selecciona una opción</option>
                   <option value="formal">Formal</option>
@@ -424,11 +430,6 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                   id="productColorSelect"
                   onChange={handleChange}
                   value={color}
-                  className={
-                    formData.submitted && !formData.color
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
                 >
                   <option value="">Selecciona una opción</option>
                   <option value="rosa">Rosa</option>
@@ -454,11 +455,6 @@ export const ProductForm = ({ addProduct, setAlert }) => {
                   name="special_occasion"
                   id="productSpecialOcasionSelect"
                   onChange={handleChange}
-                  className={
-                    formData.submitted && !formData.special_occasion
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
                 >
                   <option value="">Selecciona una opción</option>
                   <option value="opcion 1">Opción 1</option>
@@ -478,14 +474,7 @@ export const ProductForm = ({ addProduct, setAlert }) => {
               <FormGroup>
                 <Label for="productImgFile">File</Label>
                 <Col sm={10}>
-                  <Input
-                    type="file"
-                    name="images"
-                    id="productImgFile"
-                    onChange={e => {
-                      setFormData({ ...formData, images: [e.target.files[0]] });
-                    }}
-                  />
+                  <Input type="file" name="images" id="productImgFile" />
                   <FormText color="muted">
                     This is some placeholder block-level help text for the above
                     input. It's a bit lighter and easily wraps to a new line.
@@ -508,4 +497,31 @@ export const ProductForm = ({ addProduct, setAlert }) => {
   );
 };
 
-export default connect(null, { addProduct, setAlert })(ProductForm);
+ProductForm.propTypes = {
+  // getBrands: PropTypes.func.isRequired,
+  // getTypesOfSale: PropTypes.func.isRequired,
+  // getSizes: PropTypes.func.isRequired,
+  // getLengths: PropTypes.func.isRequired,
+  // getOccasions: PropTypes.func.isRequired,
+  // getEventTypes: PropTypes.func.isRequired,
+  // getColors: PropTypes.func.isRequired,
+  // getSpecialOccasions: PropTypes.func.isRequired,
+  addProduct: PropTypes.func.isRequired
+};
+const mapStateToProps = state => ({
+  loggedIn: state.authentication.loggedIn,
+  product: state.product
+});
+
+export default connect(mapStateToProps, {
+  // getBrands,
+  // getTypesOfSale,
+  // getSizes,
+  // getLengths,
+  // getOccasions,
+  // getEventTypes,
+  // getColors,
+  // getSpecialOccasions,
+  addProduct
+  // setAlert
+})(ProductForm);

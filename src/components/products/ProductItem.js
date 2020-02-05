@@ -14,11 +14,11 @@ const ProductItem = ({ product }) => {
             <img
               className="img-fluid"
               alt="img"
-              src={
-                product.get("images").length === 0
-                  ? "https://quentia.mx/img/image-not-found.png"
-                  : product.get("images")[0].url()
-              }
+              // src={
+              //   product.get("images").length === 0
+              //     ? "https://quentia.mx/img/image-not-found.png"
+              //     : product.get("images")[0].url()
+              // }
             />
           </Link>
         </div>

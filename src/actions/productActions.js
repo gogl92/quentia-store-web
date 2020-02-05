@@ -23,13 +23,15 @@ import {
   GET_COLORS,
   GET_COLORS_FAIL,
   GET_SPECIAL_OCCASIONS,
-  GET_SPECIAL_OCCASIONS_FAIL
+  GET_SPECIAL_OCCASIONS_FAIL,
+  UPLOAD_IMAGE,
+  UPLOAD_IMAGE_FAIL
 } from "./types";
 import { setAlert } from "./alertActions";
 import Parse from "parse";
 
-Parse.initialize("9a1fd5f82c592f443c9bf564a1652aff5dc57c13", null);
-Parse.serverURL = "http://34.73.39.87/parse";
+// Parse.initialize("9a1fd5f82c592f443c9bf564a1652aff5dc57c13", null);
+// Parse.serverURL = "http://34.73.39.87/parse";
 
 export const getProducts = () => async dispatch => {
   const Items = Parse.Object.extend("Item");
@@ -215,74 +217,199 @@ export const getSpecialOccasions = () => async dispatch => {
 };
 
 export const addProduct = (
+  item_name,
+  brand,
   size,
   occasion,
+  type,
   color,
+  item_length,
   item_value,
-  brand,
-  item_length2,
-  item_name,
-  typeOfSale,
   condition,
   description,
   price_sale,
   location,
   size_description,
-  item_event_type,
-  item_special_occasion
+  aviability,
+  wear_type,
+  special_occasion,
+  images
+  // size,
+  // occasion,
+  // color,
+  // item_value,
+  // brand,
+  // item_length2,
+  // item_name,
+  // typeOfSale,
+  // condition,
+  // description,
+  // price_sale,
+  // location,
+  // size_description,
+  // item_event_type,
+  // item_special_occasion
 ) => async dispatch => {
-  const Item = Parse.Object.extend("Item");
-  const Brand = Parse.Object.extend("Brand");
-  const UserSchema = Parse.Object.extend("User");
-  const Size = Parse.Object.extend("Size");
-  const Color = Parse.Object.extend("Color");
-  const TypeOfSale = Parse.Object.extend("TypeOfSale");
-  const ItemLength = Parse.Object.extend("ItemLength");
-  const Occasion = Parse.Object.extend("Occasion");
-  const ItemEventType = Parse.Object.extend("ItemEventType");
-  const SpecialOccasion = Parse.Object.extend("SpecialOccasion");
-  const newItem = new Item();
-  // newItem.save({ ...formData }).then(
-  // newItem.set("item_name", item_name);
-  // newItem.set("brand", Brand.createWithoutData(brand));
-  // newItem.set("user_id", UserSchema.createWithoutData(Parse.User.current().id));
-  newItem
-    .save({
-      item_name: item_name,
-      brand: Brand.createWithoutData(brand),
-      user_id: UserSchema.createWithoutData(Parse.User.current().id),
-      size: Size.createWithoutData(size),
-      occasion: Occasion.createWithoutData(occasion),
-      // color: Color.createWithoutData(color),
-      typeOfSale: TypeOfSale.createWithoutData(typeOfSale)
-      // item_event_type: ItemEventType.createWithoutData(item_event_type),
-      // item_special_occasion: SpecialOccasion.createWithoutData(
-      //   item_special_occasion
-      // ),
-      // item_length2: ItemLength.createWithoutData(item_length2),
-      // item_value: item_value,
-      // condition: condition,
-      // description: description,
-      // price_sale: price_sale,
-      // location: location,
-      // size_description: size_description
-    })
-    .then(
-      newItem => {
+  try {
+    const Item = Parse.Object.extend("Item");
+    const newItem = new Item();
+    const UserSchema = Parse.Object.extend("User");
+    const image = new Parse.File(images);
+    image.save().then(
+      function() {
+        dispatch({
+          type: UPLOAD_IMAGE,
+          payload: newItem
+        });
+      },
+      function(err) {
+        const errors = err.message;
+        if (errors) {
+          dispatch(setAlert(errors, "danger"));
+        }
+        dispatch({ type: UPLOAD_IMAGE_FAIL });
+      }
+    );
+    newItem
+      .save({
+        user_id: UserSchema.createWithoutData(Parse.User.current().id),
+        item_name: item_name,
+        brand: brand,
+        size: size,
+        occasion: occasion,
+        type: type,
+        color: color,
+        item_length: item_length,
+        item_value: item_value,
+        condition: condition,
+        description: description,
+        price_sale: price_sale,
+        location: location,
+        size_description: size_description,
+        aviability: aviability,
+        wear_type: wear_type,
+        special_occasion: special_occasion,
+        image: image
+      })
+      .then(newItem => {
         dispatch({
           type: UPLOAD_PRODUCT_SUCCESS,
           payload: newItem
         });
         dispatch(setAlert("Product Added", "success"));
-      },
-      err => {
-        const errors = err.message;
-        if (errors) {
-          dispatch(setAlert(errors, "danger"));
-        }
-        dispatch({ type: UPLOAD_PRODUCT_FAIL });
-      }
-    );
+      });
+  } catch (err) {
+    const errors = err.message;
+    if (errors) {
+      dispatch(setAlert(errors, "danger"));
+    }
+    dispatch({ type: UPLOAD_PRODUCT_FAIL });
+  }
+  // newItem
+  //   .save({
+  //     user_id: UserSchema.createWithoutData(Parse.User.current().id),
+  //     item_name: item_name,
+  //     brand: brand,
+  //     size: size,
+  //     occasion: occasion,
+  //     type: type,
+  //     color: color,
+  //     item_length: item_length,
+  //     item_value: item_value,
+  //     condition: condition,
+  //     description: description,
+  //     price_sale: price_sale,
+  //     location: location,
+  //     size_description: size_description,
+  //     aviability: aviability,
+  //     wear_type: wear_type,
+  //     special_occasion: special_occasion
+  //   })
+  //   .then(
+  //     newItem => {
+  //       dispatch({
+  //         type: UPLOAD_PRODUCT_SUCCESS,
+  //         payload: newItem
+  //       });
+  //       dispatch(setAlert("Product Added", "success"));
+  //     },
+  //     err => {
+  //       const errors = err.message;
+  //       if (errors) {
+  //         dispatch(setAlert(errors, "danger"));
+  //       }
+  //       dispatch({ type: UPLOAD_PRODUCT_FAIL });
+  //     }
+  //   );
+
+  // const Item = Parse.Object.extend("Item");
+  // // const Brand = Parse.Object.extend("Brand");
+  // const UserSchema = Parse.Object.extend("User");
+  // const Size = Parse.Object.extend("Size");
+  // const Color = Parse.Object.extend("Color");
+  // const TypeOfSale = Parse.Object.extend("TypeOfSale");
+  // const ItemLength = Parse.Object.extend("ItemLength");
+  // const Occasion = Parse.Object.extend("Occasion");
+  // const ItemEventType = Parse.Object.extend("ItemEventType");
+  // const SpecialOccasion = Parse.Object.extend("SpecialOccasion");
+  // const newItem = new Item();
+  // newItem.save({ ...formData }).then(
+  // newItem.set("item_name", item_name);
+  // newItem.set("brand", Brand.createWithoutData(brand));
+  // newItem.set("user_id", UserSchema.createWithoutData(Parse.User.current().id));
+  // newItem
+  //   .save({
+  //     item_name: item_name,
+  //     brand: brand,
+  //     user_id: UserSchema.createWithoutData(Parse.User.current().id),
+  //     size: size,
+  //     occasion: occasion,
+  //     // color: Color.createWithoutData(color),
+  //     type: type,
+  //     color: color,
+  //     item_length: item_length,
+  //     item_value: item_value,
+  //     condition: condition,
+  //     description: description,
+  //     price_sale: price_sale,
+  //     location: location,
+  //     size_description: size_description,
+  //     aviability: aviability
+  //     // item_name: item_name,
+  //     // brand: Brand.createWithoutData(brand),
+  //     // user_id: UserSchema.createWithoutData(Parse.User.current().id),
+  //     // size: Size.createWithoutData(size),
+  //     // occasion: Occasion.createWithoutData(occasion),
+  //     // // color: Color.createWithoutData(color),
+  //     // typeOfSale: TypeOfSale.createWithoutData(typeOfSale)
+  //     // item_event_type: ItemEventType.createWithoutData(item_event_type),
+  //     // item_special_occasion: SpecialOccasion.createWithoutData(
+  //     //   item_special_occasion
+  //     // ),
+  //     // item_length2: ItemLength.createWithoutData(item_length2),
+  //     // item_value: item_value,
+  //     // condition: condition,
+  //     // description: description,
+  //     // price_sale: price_sale,
+  //     // location: location,
+  //     // size_description: size_description
+  //   })
+  //   .then(
+  //     newItem => {
+  //       dispatch({
+  //         type: UPLOAD_PRODUCT_SUCCESS,
+  //         payload: newItem
+  //       });
+  //       dispatch(setAlert("Product Added", "success"));
+  //     },
+  //     err => {
+  //       const errors = err.message;
+  //       if (errors) {
+  //         dispatch(setAlert(errors, "danger"));
+  //       }
+  //       dispatch({ type: UPLOAD_PRODUCT_FAIL });
+  //     }
+  //   );
   // newItem
   //   .save({
   //     brand: brand,
